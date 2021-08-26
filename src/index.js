@@ -1,1 +1,1 @@
-console.log('if you see me, everything is AOK')
+import shipFactory from './ship';
