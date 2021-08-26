@@ -1,12 +1,17 @@
 const ship = (length) => {
-    hits: []
-    function hit(){
-
+    hits: [],
+    function hit(hitLocation){
+        hits.push(hitLocation)
     };
+
     function isSunk(){
-
+        if (hits.length == length){
+            return true;
+        } else {
+            return false;
+        }
     };
-    return {hit}
+    return {hit, hits}
 }
 
 
