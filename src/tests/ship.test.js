@@ -1,5 +1,6 @@
-import ship from './ship';
+import ship from '../ship';
 
+const boat = ship(2)
 test('Tests...', () => {
-    expect(ship(2)).toBe();
+    expect(boat.length).toBe(2);
 });

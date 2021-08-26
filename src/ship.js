@@ -1,18 +1,19 @@
 const ship = (length) => {
-    hits: [],
-    function hit(hitLocation){
+    let hits = [];
+    const hit = hitLocation => {
         hits.push(hitLocation)
     };
 
-    function isSunk(){
+    const isSunk = () => {
         if (hits.length == length){
             return true;
         } else {
             return false;
         }
     };
-    return {hit, hits}
+    return {hit, hits, length}
 }
+
 
 
 export default ship;
