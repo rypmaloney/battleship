@@ -1,3 +1,8 @@
-import gameboard from ('..gameboard')
+import gameboard from '../gameboard'
 
-ß
+let player = "me"
+let playerBoard = gameboard(player)
+let board = playerBoard.getBoard()
+test('Tests existence of board', () => {
+    expect(board.length).toBe(10);
+});

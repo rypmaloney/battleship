@@ -1,5 +1,5 @@
 const ship = (length) => {
-    let shipArray = []
+
     let hits = [];
     const hit = hitLocation => {
         hits.push(hitLocation)
