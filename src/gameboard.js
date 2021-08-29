@@ -31,9 +31,12 @@ const gameboard = (player) => {
         board[x][y].ship = true
         board[x][y].id = id
 
+        meta.ships.push(ship(length,x,y))
+        
+
         //only works for vertical ships 
         for(let i=0;i<length-1; i++){
-            x+=1
+            y-=1
             board[x][y].ship = true;
             board[x][y].id = id
         }
@@ -41,10 +44,15 @@ const gameboard = (player) => {
 
     function receiveAttack(x,y){
         if(board[x][y].id != null){
+            //find the id of the boat at that location in the meta.ships array
+            let index = meta.ships.map(e => e.id).indexOf(board[x][y].id)
+
+            //hit that boat at the location
+            meta.ships[index].hit(x,y)
             
         }else{
             meta.missedHits.push([x, y])
-            board[x][y].missedHit=true,
+            board[x][y].missedHit=true
 
         }
     }
