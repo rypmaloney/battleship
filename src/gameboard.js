@@ -6,6 +6,7 @@ const gameboard = (player) => {
     const meta = {
         playerName: player,
         ships: [],
+        missedHits: [],
     }
     //creation of the gameboard through looping; 10x10; use board[x][y] to reference a space
     let board = []
@@ -16,6 +17,7 @@ const gameboard = (player) => {
                 ship:false,
                 id: null,
                 hit: false,
+                missedHit:false,
             })
             
         }
@@ -41,17 +43,19 @@ const gameboard = (player) => {
         if(board[x][y].id != null){
             
         }else{
-            missedHits.push(board[x][y])
+            meta.missedHits.push([x, y])
+            board[x][y].missedHit=true,
+
         }
     }
 
-    let missedHits = []
 
 
     return {
         getBoard, 
         meta,
-        placeShip
+        placeShip,
+        receiveAttack
             }
 }
 

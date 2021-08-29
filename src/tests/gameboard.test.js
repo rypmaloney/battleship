@@ -44,3 +44,5 @@ samplePlayerBoard.meta.ships.push(samplePlayerShip)
 test('confirms ship manifest logs information', () => {
     expect(samplePlayerBoard.meta.ships.length).toBe(1);
 });
+
+ships[0].hit(4,3)

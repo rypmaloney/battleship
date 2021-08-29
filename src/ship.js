@@ -1,8 +1,8 @@
 const ship = (length, x, y) => {
     let id = `${x}x${y}`
     let hits = [];
-    const hit = hitLocation => {
-        hits.push(hitLocation)
+    const hit = (hitx, hity) => {
+        hits.push({hitx, hity})
     };
 
     const isSunk = () => {
