@@ -1,4 +1,5 @@
 import gameboard from '../gameboard'
+import ship from '../ship'
 
 let player = "me"
 let playerBoard = gameboard(player)
@@ -33,4 +34,13 @@ test('confirms placement of 4 square vertical ship part d', () => {
 
 test('confirms id is present', () => {
     expect(board[7][3].id).toBe('4x3');
+});
+
+let samplePlayerShip = ship(3,3,3)
+let samplePlayerBoard = gameboard(player)
+samplePlayerBoard.meta.ships.push(samplePlayerShip)
+
+
+test('confirms ship manifest logs information', () => {
+    expect(samplePlayerBoard.meta.ships.length).toBe(1);
 });
