@@ -32,11 +32,9 @@ describe("Is the board and a ship there?", () => {
   });
 });
 
-
-
 describe("checking logging of hits on board and ships", () => {
   let samplePlayerShip = ship(3, 3, 3);
-  let samplePlayerBoard = gameboard('player');
+  let samplePlayerBoard = gameboard("player");
   samplePlayerBoard.meta.ships.push(samplePlayerShip);
 
   test("confirms ship manifest logs information", () => {
@@ -56,15 +54,14 @@ describe("checking logging of hits on board and ships", () => {
   });
 });
 
-
 describe("does sinking work in meta.ships", () => {
-    let newPlayerBoard = gameboard("me");
-    let ship1 = ship(3, 3, 3);
-    newPlayerBoard.placeShip(3, 3, 3);
-    let ship2 = ship(5, 7, 2);
-    newPlayerBoard.placeShip(5, 7, 2);
-  
-    newPlayerBoard.receiveAttack(3, 3);
+  let newPlayerBoard = gameboard("me");
+  let ship1 = ship(3, 3, 3);
+  newPlayerBoard.placeShip(3, 3, 3);
+  let ship2 = ship(5, 7, 2);
+  newPlayerBoard.placeShip(5, 7, 2);
+
+  newPlayerBoard.receiveAttack(3, 3);
   newPlayerBoard.receiveAttack(3, 2);
   newPlayerBoard.receiveAttack(3, 1);
 
