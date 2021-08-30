@@ -1,10 +1,9 @@
-const ship = (length, x, y) => {
-    let id = `${x}x${y}`
+const ship = (length, spot) => {
+    let id = `ship${spot}`
     let hits = [];
-    const hit = (hitx, hity) => {
+    const hit = (hitLocation) => {
         hits.push({
-            x: hitx,
-            y: hity,
+            hitLocation
         })
     };
 

@@ -10,46 +10,44 @@ const gameboard = (player) => {
   };
   //creation of the gameboard through looping; 10x10; use board[x][y] to reference a space
   let board = [];
-  for (let i = 0; i < 10; i++) {
-    board.push([]);
-    for (let x = 0; x < 10; x++) {
-      board[i].push({
+    for (let x = 0; x < 100; x++) {
+    board.push({
         ship: false,
         id: null,
         hit: false,
         missedHit: false,
-      });
+        });
     }
-  }
+
   //Board giveth
   const getBoard = () => board;
 
   //
-  function placeShip(x, y, length) {
-    let id = `${x}x${y}`;
-    board[x][y].ship = true;
-    board[x][y].id = id;
+  function placeShip(spot, length) {
+    let id = `ship${spot}`;
+    board[spot].ship = true;
+    board[spot].id = id;
 
-    meta.ships.push(ship(length, x, y));
+    meta.ships.push(ship(length,spot));
 
     //only works for vertical ships
     for (let i = 0; i < length - 1; i++) {
-      y -= 1;
-      board[x][y].ship = true;
-      board[x][y].id = id;
+      spot -= 10;
+      board[spot].ship = true;
+      board[spot].id = id;
     }
   }
 
-  function receiveAttack(x, y) {
-    if (board[x][y].id != null) {
+  function receiveAttack(spot) {
+    if (board[spot].id != null) {
       //find the id of the boat at that location in the meta.ships array
-      let index = meta.ships.map((e) => e.id).indexOf(board[x][y].id);
+      let index = meta.ships.map((e) => e.id).indexOf(board[spot].id);
 
       //hit that boat at the location
-      meta.ships[index].hit(x, y);
+      meta.ships[index].hit(spot);
     } else {
-      meta.missedHits.push([x, y]);
-      board[x][y].missedHit = true;
+      meta.missedHits.push(spot);
+      board[spot].missedHit = true;
     }
   }
 
