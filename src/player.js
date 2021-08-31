@@ -6,12 +6,10 @@ const player = (name) => {
     }
 
     function randomMove(){
-        let x =  Math.floor(Math.random() * 9);
-        let y =  Math.floor(Math.random() * 9);
+        let x =  Math.floor(Math.random() * 100);
 
-        meta.moves.push([x,y])
-
-        return [x,y]
+        meta.moves.push(x)
+        return x
     }
     /*
     const AI = () => {

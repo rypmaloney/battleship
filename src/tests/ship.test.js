@@ -1,13 +1,12 @@
 import ship from '../ship';
 
-const boat = ship(2)
+const boat = ship(2,10)
 test('Tests length', () => {
     expect(boat.length).toBe(2);
 });
 
-boat.hit('1a')
-boat.hit('1b')
-
+boat.hit(10)
+boat.hit(0)
 
 
 test('Tests hits are being logged', () => {
