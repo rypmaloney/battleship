@@ -1,0 +1,21 @@
+#main {
+    display: flex;
+    flex-direction: row;
+
+}
+
+#main div {
+    display: flex;
+    margin: auto;
+    text-align: center;
+}
+
+.board {
+    display: flex;
+    flex-direction: row;
+}
+
+.board div{
+    margin: auto;
+    border: 1px solid black;
+}

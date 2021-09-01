@@ -1,4 +1,4 @@
-import { node } from "webpack";
+
 import ship from "./ship";
 
 const gameboard = (player) => {

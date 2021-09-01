@@ -1,5 +1,12 @@
-import ship from './ship';
+console.log('If you see me...')
 
-let one = ship(2);
+import ship from "./ship";
+import player from "./player";
+import gameboard from "./gameboard";
+import initializeBoard from "./gamecontrol"
 
-ship.hit(1)
+initializeBoard()
+
+
+
+
