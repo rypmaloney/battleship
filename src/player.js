@@ -5,6 +5,10 @@ const player = (name) => {
         moves: [],
     }
 
+    function turn(spot){
+        
+    }
+
     function randomMove(){
         let x =  Math.floor(Math.random() * 100);
 
