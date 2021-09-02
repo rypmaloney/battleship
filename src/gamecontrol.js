@@ -3,18 +3,26 @@ import gameboard from './gameboard'
 import ship from './ship'
 
 function initializeBoard(){
-const computerGameboard = gameboard('computer')
-const compBoard = document.getElementById('computer-board');
-
-let board = computerGameboard.getBoard()
-console.log(board)
-
-for (let i=0 ; i < board.length; i++){
-    let spot = document.createElement('div');
-    spot.setAttribute('id', i)
-    compBoard.appendChild(spot)
-
-}
+    //Create computer board
+    const computerGameboard = gameboard('computer')
+    const computerDomBoard = document.getElementById('computer-board');
+    let cboard = computerGameboard.getBoard()
+    for (let i=0 ; i < cboard.length; i++){
+        let spot = document.createElement('div');
+        spot.setAttribute('id', i)
+        spot.setAttribute('class', "spot")
+        computerDomBoard.appendChild(spot)
+    }
+    //create player board
+    const playerGameboard = gameboard('player')
+    const playerDomBoard = document.getElementById('player-board');
+    let pboard = playerGameboard.getBoard()
+    for (let i=0 ; i < pboard.length; i++){
+        let spot = document.createElement('div');
+        spot.setAttribute('id', i)
+        spot.setAttribute('class', "spot")
+       
+    }
 }
 
 export default initializeBoard;

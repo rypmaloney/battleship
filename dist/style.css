@@ -1,21 +1,37 @@
+body {
+    text-align: center;
+}
 #main {
-    display: flex;
     flex-direction: row;
-
+    display: flex;
+    align-content: center;
+    justify-content: center;
 }
 
 #main div {
-    display: flex;
-    margin: auto;
     text-align: center;
 }
 
+.pane {
+    width: 300px;
+    height: 450px;
+    margin: 10px;
+    margin-top: 40px;
+    border: 1px solid black;
+}
 .board {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    height: 400px;
+    width: 400px;
+
 }
 
-.board div{
-    margin: auto;
+.spot{
+
     border: 1px solid black;
+    margin: 0 -1px -1px 0;
+    padding: 0;
+
 }
