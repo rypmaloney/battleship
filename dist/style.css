@@ -51,6 +51,10 @@ h1 {
 
 }
 
+.computer-spot {
+    cursor: pointer;
+}
+
 .ship {
     background-color: rgb(66, 65, 65);
     box-shadow:  inset 2px 1px 4px rgba(151, 162, 167, 0.87);
