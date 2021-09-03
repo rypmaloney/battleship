@@ -40,6 +40,9 @@ const gameboard = (player) => {
 
   function receiveAttack(spot) {
     if (board[spot].id != null) {
+      //update the board
+      board[spot].hit = true;
+
       //find the id of the boat at that location in the meta.ships array
       let index = meta.ships.map((e) => e.id).indexOf(board[spot].id);
 

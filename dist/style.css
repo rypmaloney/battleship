@@ -1,11 +1,22 @@
 body {
     text-align: center;
+    background-color: rgba(0, 139, 139, 0.253);
+    font-family: 'Titillium Web', sans-serif;;
+    color: rgb(78, 65, 65);
+    
 }
 #main {
     flex-direction: row;
     display: flex;
     align-content: center;
     justify-content: center;
+}
+
+h1 {    
+    margin-bottom: 0;
+    font-size: 50px;
+    color: rgba(68, 65, 65, 0.89);
+
 }
 
 #main div {
@@ -17,7 +28,9 @@ body {
     height: 450px;
     margin: 10px;
     margin-top: 40px;
-    border: 1px solid black;
+    border: 5px solid rgb(148, 87, 23);
+    background-color: rgba(241, 211, 171, 0.548);
+    box-shadow:  inset 4px 2px 4px burlywood;
 }
 .board {
     display: grid;
@@ -25,13 +38,39 @@ body {
     grid-template-rows: repeat(10, 1fr);
     height: 400px;
     width: 400px;
+    border: 3px solid rgb(148, 87, 23);
 
 }
 
 .spot{
-
-    border: 1px solid black;
+    border: 1px solid rgb(87, 111, 245);
+    background-color: rgba(100, 171, 237, 0.37);
+    box-shadow:  inset 4px 2px 4px rgb(135, 197, 222);
     margin: 0 -1px -1px 0;
     padding: 0;
 
+}
+
+.ship {
+    background-color: rgb(66, 65, 65);
+    box-shadow:  inset 2px 1px 4px rgba(151, 162, 167, 0.87);
+    margin: 0 -1px -1px 0;
+}
+
+.hit {
+    background-color: rgb(168, 45, 45) !important;
+    box-shadow:  inset 2px 1px 4px rgba(151, 162, 167, 0.87);
+    margin: 0 -1px -1px 0;
+}
+
+.miss{
+    background-color: rgba(100, 171, 237, 0.137);
+    margin: 0 -1px -1px 0;
+    border: 1px solid rgb(87, 111, 245);
+}
+
+.miss:after{
+    content:"\d7";
+    font-size:25px;
+    color:rgb(158, 157, 157);
 }
