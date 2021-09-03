@@ -11,21 +11,27 @@ import ship from './ship'
         1. choosing spot runnign computerBoard.receive(spot)
         2. Switch turn
 
+
+To do: 
+    1. Make ability to place ships horizontally
+    2. create random placement for computer
+    2. 
 */
 
 
-function turn(e){
-    computerGameboard.receiveAttack(parseInt(e.target.id))
+
+
+
+
+
+
+
+
+
+function turn(e, oppositionBoard){
+    oppositionBoard.receiveAttack(parseInt(e.target.id))
     updateBoard(e)
 }
-
-
-
-
-
-
-
-
 
 
 const playerGameboard = gameboard('player')
@@ -49,12 +55,10 @@ function updateBoard(e){
 
 
 //two test ships
-playerGameboard.placeShip(50, 4)
-playerGameboard.placeShip(75, 2)
-computerGameboard.placeShip(50, 4)
-computerGameboard.placeShip(75, 2)
-computerGameboard.placeShip(98, 5)
-computerGameboard.placeShip(33, 2)
+playerGameboard.placeShip(50, 4, 'x')
+playerGameboard.placeShip(75, 2, 'y')
+computerGameboard.placeShip(50, 4, 'x')
+
 
 //testing hit and miss
 playerGameboard.receiveAttack(40)
@@ -68,7 +72,7 @@ function initializeBoard(){
         spot.setAttribute('id', i)
         spot.setAttribute('class', "spot computer-spot")
 
-        spot.addEventListener("click",(e)=> turn(e));
+        spot.addEventListener("click",(e)=> turn(e, computerGameboard));
 
         computerDomBoard.appendChild(spot)
     }

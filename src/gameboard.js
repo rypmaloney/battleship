@@ -23,7 +23,7 @@ const gameboard = (player) => {
   const getBoard = () => board;
 
   //
-  function placeShip(spot, length) {
+  function placeShip(spot, length, direction) {
     let id = `ship${spot}`;
     board[spot].ship = true;
     board[spot].id = id;
@@ -31,11 +31,25 @@ const gameboard = (player) => {
     meta.ships.push(ship(length,spot));
 
     //only works for vertical ships
-    for (let i = 0; i < length - 1; i++) {
-      spot -= 10;
-      board[spot].ship = true;
-      board[spot].id = id;
+    if (direction === "y"){
+      for (let i = 0; i < length - 1; i++) {
+        spot -= 10;
+        board[spot].ship = true;
+        board[spot].id = id;
+      }
+
     }
+    //Horizontal ships
+    if (direction === "x"){
+      for (let i = 0; i < length - 1; i++) {
+        spot += 1;
+        board[spot].ship = true;
+        board[spot].id = id;
+      }
+
+    }
+
+    
   }
 
   function receiveAttack(spot) {
