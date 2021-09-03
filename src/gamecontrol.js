@@ -19,40 +19,117 @@ To do:
 */
 
 
+function playGame(){
+
+    const computerPlayer = player('computer')
+    const humanPlayer = player('human')
+    const playerGameboard = gameboard('player')
+    const computerGameboard = gameboard('computer')
+
+    const computerDomBoard = document.getElementById('computer-board');
+    const playerDomBoard = document.getElementById('player-board');
+
+
+
+    //two test ships
+    playerGameboard.placeShip(50, 4, 'x')
+    playerGameboard.placeShip(75, 2, 'y')
+    computerGameboard.placeShip(50, 4, 'x')
+    initializeBoard()
+        
+    let turn = "player"
+    function playerTurn(e, oppositionBoard){
+        oppositionBoard.receiveAttack(parseInt(e.target.id))
+        updateComputerBoard(e)
+        switchTurn()
+        computerTurn()
+    }
+
+    function switchTurn(){
+        if(turn == "player"){
+            return turn = "computer"
+        }
+    }
+
+    function computerTurn(){
+        let selection = computerPlayer.randomMove()
+
+        playerGameboard.receiveAttack(selection)
+        updatePlayerBoard(selection)
+    }
+
+
+
+
+    function initializeBoard(){
+        //Create computer board
+        let cboard = computerGameboard.getBoard()
+        for (let i=0 ; i < cboard.length; i++){
+            let spot = document.createElement('div');
+            spot.setAttribute('id', i)
+            spot.setAttribute('class', "spot computer-spot")
+    
+            spot.addEventListener("click",(e)=> playerTurn(e, computerGameboard));
+    
+            computerDomBoard.appendChild(spot)
+        }
+        //create player board
+        let pboard = playerGameboard.getBoard()
+        for (let i=0 ; i < pboard.length; i++){
+            let spot = document.createElement('div');
+            spot.setAttribute('id', `p${i}`)
+            spot.setAttribute('class', "spot")
+            if(pboard[i].ship == true){spot.setAttribute('class', "ship ")}
+            if(pboard[i].hit == true){spot.setAttribute('class', "hit ")}
+            if(pboard[i].missedHit == true){spot.setAttribute('class', "miss ")}
+           
+            playerDomBoard.appendChild(spot)
+        }
+
+    }
 
 
 
 
 
+    function updateComputerBoard(e){
+        let index = e.target.id
+    
+        let cboard = computerGameboard.getBoard()
+        let cspot = document.getElementById(index)
+        if(cboard[index].ship == true){cspot.setAttribute('class', "ship")}
+        if(cboard[index].hit == true){cspot.setAttribute('class', "hit")}
+        if(cboard[index].missedHit == true){cspot.setAttribute('class', "miss")}
+    
+    }
+    
+    function updatePlayerBoard(selection){
+        let index = selection
 
-
-
-
-function turn(e, oppositionBoard){
-    oppositionBoard.receiveAttack(parseInt(e.target.id))
-    updateBoard(e)
+        let pboard = playerGameboard.getBoard()
+        console.log(pboard[index])
+        let pspot = document.getElementById(`p${index}`)
+        if(pboard[index].ship == true){pspot.setAttribute('class', "ship")}
+        if(pboard[index].hit == true){pspot.setAttribute('class', "hit")}
+        if(pboard[index].missedHit == true){pspot.setAttribute('class', "miss")}
+    }
 }
 
 
-const playerGameboard = gameboard('player')
-const computerGameboard = gameboard('computer')
-
-const computerDomBoard = document.getElementById('computer-board');
-const playerDomBoard = document.getElementById('player-board');
-
-
-function updateBoard(e){
-    let index = e.target.id
-
-    let cboard = computerGameboard.getBoard()
-    let spot = document.getElementById(index)
-    if(cboard[index].ship == true){spot.setAttribute('class', "ship")}
-    if(cboard[index].hit == true){spot.setAttribute('class', "hit")}
-    if(cboard[index].missedHit == true){spot.setAttribute('class', "miss")}
-}
 
 
 
+
+
+
+
+
+
+
+
+
+
+/*
 
 //two test ships
 playerGameboard.placeShip(50, 4, 'x')
@@ -72,7 +149,7 @@ function initializeBoard(){
         spot.setAttribute('id', i)
         spot.setAttribute('class', "spot computer-spot")
 
-        spot.addEventListener("click",(e)=> turn(e, computerGameboard));
+        spot.addEventListener("click",(e)=> playerTurn(e, computerGameboard));
 
         computerDomBoard.appendChild(spot)
     }
@@ -90,5 +167,5 @@ function initializeBoard(){
     }
     console.log(pboard)
 }
-
-export default initializeBoard;
+*/
+export default playGame;

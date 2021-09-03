@@ -4,9 +4,10 @@ import ship from "./ship";
 import player from "./player";
 import gameboard from "./gameboard";
 import initializeBoard from "./gamecontrol"
+import playGame from "./gamecontrol";
 
 
-initializeBoard()
+playGame()
 
 
 
