@@ -38,6 +38,23 @@ h1 {
 .log {
     margin: 10px;
 }
+
+.your {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+}
+.your h3 {
+    margin-left: 30%;
+}
+
+
+#rotate{
+    height: 20px;
+    width: 40px;
+    margin: auto auto auto 10px;
+}
 .board {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
@@ -58,7 +75,7 @@ h1 {
 }
 .spot:hover{
     background-color: rgba(209, 231, 252, 0.548);;
-    box-shadow:   4px 2px 10px rgb(60, 111, 131);
+    box-shadow:   2px 1px 50px rgb(60, 111, 131);
 }
 .computer-spot {
     cursor: pointer;
@@ -95,16 +112,53 @@ h1 {
     box-shadow:     4px 2px 10px  rgba(151, 162, 167, 0.87);
 }
 
-.ship-2{
+.ship-display{
     display: flex;
     flex-direction: row;
     margin-left: 30px;
     margin-top: 5px;
 
 }
+
 .shipbox{
     width: 20px;
     height: 20px;
     background-color: rgb(66, 65, 65);
     box-shadow:  inset 2px 1px 4px rgba(151, 162, 167, 0.87);
+}
+
+.display-horizontal{
+    display: flex;
+    flex-direction: row;
+    margin-left: 30px;
+    margin-top: 5px;
+}
+
+.display-vertical{
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+    margin-top: 5px;
+}
+
+.log-vertical{
+    flex-direction: row;
+}
+
+.spot-vertical:hover{
+    background-color: gray;
+    box-shadow: 0 -35px;
+}
+
+#rotatable{
+    display: flex;
+    align-content: flex-end ;
+}
+
+.rotatable-row{
+    flex-direction: row;
+}
+
+.rotatable-column{
+    flex-direction: column;
 }

@@ -19,6 +19,44 @@ To do:
 */
 
 
+
+
+
+let shipDirection = "y"
+
+function rotateMyShips(){
+    if (shipDirection == "y"){
+        let ships = document.querySelectorAll(".display-vertical")
+        console.log(ships)
+        let rotatable = document.getElementById('rotatable')
+        rotatable.setAttribute('class', 'rotatable-column')
+        for(let i=0; i < ships.length; i ++){
+            ships[i].setAttribute('class', 'display-horizontal') 
+        }
+
+        return shipDirection = "x"
+
+
+    } else if (shipDirection == "x"){
+            let ships = document.querySelectorAll('.display-horizontal')
+            let rotatable = document.getElementById('rotatable')
+            rotatable.setAttribute('class', 'rotatable-row')
+            for(let i=0; i < ships.length; i ++){
+                ships[i].setAttribute('class', 'ship-display display-vertical')
+            }
+
+            return shipDirection = "y"
+    }
+    
+
+}
+
+
+
+
+
+
+
 function playGame(){
 
     const computerPlayer = player('computer')
@@ -113,6 +151,11 @@ function playGame(){
         if(pboard[index].hit == true){pspot.setAttribute('class', "hit")}
         if(pboard[index].missedHit == true){pspot.setAttribute('class', "miss")}
     }
+
+
+
+    const rotateBtn = document.getElementById('rotate')
+    rotateBtn.addEventListener('click', () => rotateMyShips())
 }
 
 
