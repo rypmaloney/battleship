@@ -53,7 +53,8 @@ function playGame() {
   const playerDomBoard = document.getElementById("player-board");
   const placeDomBoard = document.getElementById("place-board")
 
-
+  const rotateBtn = document.getElementById("rotate");
+  rotateBtn.addEventListener("click", () => rotateMyShips());
 
   
   //two test ships
@@ -126,6 +127,21 @@ function playGame() {
 
   }
 
+  function selectShipsWalkthrough(){
+	
+	//make modal visible
+	modal.style.display ='block';
+	
+  }
+
+
+
+
+
+
+
+
+
   function updateComputerBoard(e) {
     let index = e.target.id;
 
@@ -159,14 +175,30 @@ function playGame() {
     }
   }
 
-  const rotateBtn = document.getElementById("rotate");
-  rotateBtn.addEventListener("click", () => rotateMyShips());
+  
 }
 
 
 
 
 
+////////////////////////////////////////
+function openModal(){
+
+    modal.style.display ='block';
+
+    window.onclick = function(event) {
+        if (event.target == about) {
+          modal.style.display = "none";
+        }
+      }
+}
+
+
+function closeModal(){
+    let about = document.getElementById('aboutModal');
+        about.style.display = "none";
+}
 
 
 

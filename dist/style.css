@@ -164,7 +164,7 @@ h1 {
     flex-direction: column;
 }
 
-.place-ships-modal {
+#place-ships-modal {
     display: block; 
     position: fixed; 
     z-index: 1; 
@@ -195,7 +195,7 @@ h1 {
 .preview{
     display: flex;
     flex-direction: row;
-    margin:  5px auto 5px auto;
+    margin:  5px auto 15px auto;
 
 
 }
