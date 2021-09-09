@@ -1,6 +1,6 @@
-import player from './player'
-import gameboard from './gameboard'
-import ship from './ship'
+import player from "./player";
+import gameboard from "./gameboard";
+import ship from "./ship";
 
 /* Steps:
     1. Initialize gameboard x
@@ -18,37 +18,149 @@ To do:
     2. 
 */
 
+let shipDirection = "y";
 
-
-
-
-let shipDirection = "y"
-
-function rotateMyShips(){
-    if (shipDirection == "y"){
-        let ships = document.querySelectorAll(".display-vertical")
-        console.log(ships)
-        let rotatable = document.getElementById('rotatable')
-        rotatable.setAttribute('class', 'rotatable-column')
-        for(let i=0; i < ships.length; i ++){
-            ships[i].setAttribute('class', 'display-horizontal') 
-        }
-
-        return shipDirection = "x"
-
-
-    } else if (shipDirection == "x"){
-            let ships = document.querySelectorAll('.display-horizontal')
-            let rotatable = document.getElementById('rotatable')
-            rotatable.setAttribute('class', 'rotatable-row')
-            for(let i=0; i < ships.length; i ++){
-                ships[i].setAttribute('class', 'ship-display display-vertical')
-            }
-
-            return shipDirection = "y"
+function rotateMyShips() {
+  if (shipDirection == "y") {
+    let ships = document.querySelectorAll(".display-vertical");
+    console.log(ships);
+    let rotatable = document.getElementById("rotatable");
+    rotatable.setAttribute("class", "rotatable-column");
+    for (let i = 0; i < ships.length; i++) {
+      ships[i].setAttribute("class", "display-horizontal");
     }
-    
 
+    return (shipDirection = "x");
+  } else if (shipDirection == "x") {
+    let ships = document.querySelectorAll(".display-horizontal");
+    let rotatable = document.getElementById("rotatable");
+    rotatable.setAttribute("class", "rotatable-row");
+    for (let i = 0; i < ships.length; i++) {
+      ships[i].setAttribute("class", "ship-display display-vertical");
+    }
+
+    return (shipDirection = "y");
+  }
+}
+
+function playGame() {
+  const computerPlayer = player("computer");
+  const humanPlayer = player("human");
+  const playerGameboard = gameboard("player");
+  const computerGameboard = gameboard("computer");
+
+  const computerDomBoard = document.getElementById("computer-board");
+  const playerDomBoard = document.getElementById("player-board");
+  const placeDomBoard = document.getElementById("place-board")
+
+
+
+  
+  //two test ships
+  playerGameboard.placeShip(50, 2, "x");
+  playerGameboard.placeShip(75, 2, "y");
+  computerGameboard.placeShip(50, 4, "x");
+  initializeBoard();
+
+
+
+
+
+  function switchTurn() {
+    if (turn == "player") {
+      return (turn = "computer");
+    }
+  }
+
+  let turn = "player";
+  function playerTurn(e, oppositionBoard) {
+    oppositionBoard.receiveAttack(parseInt(e.target.id));
+    updateComputerBoard(e);
+    switchTurn();
+    computerTurn();
+  }
+
+
+  function computerTurn() {
+    let selection = computerPlayer.randomMove();
+    playerGameboard.receiveAttack(selection);
+    updatePlayerBoard(selection);
+  }
+
+
+
+
+  function initializeBoard() {
+    //Create computer board
+    let cboard = computerGameboard.getBoard();
+    for (let i = 0; i < cboard.length; i++) {
+      let spot = document.createElement("div");
+      spot.setAttribute("id", i);
+      spot.setAttribute("class", "spot computer-spot");
+
+      spot.addEventListener("click", (e) => playerTurn(e, computerGameboard));
+
+      computerDomBoard.appendChild(spot);
+    }
+    //create player board
+    let pboard = playerGameboard.getBoard();
+    for (let i = 0; i < pboard.length; i++) {
+      let spot = document.createElement("div");
+      spot.setAttribute("id", `p${i}`);
+      spot.setAttribute("class", "spot p");
+      if (pboard[i].ship == true) {
+        spot.setAttribute("class", "ship p");
+      }
+      if (pboard[i].hit == true) {
+        spot.setAttribute("class", "hit ");
+      }
+      if (pboard[i].missedHit == true) {
+        spot.setAttribute("class", "miss ");
+      }
+
+      playerDomBoard.appendChild(spot);
+      placeDomBoard.appendChild(spot);
+    }
+
+
+
+  }
+
+  function updateComputerBoard(e) {
+    let index = e.target.id;
+
+    let cboard = computerGameboard.getBoard();
+    let cspot = document.getElementById(index);
+    if (cboard[index].ship == true) {
+      cspot.setAttribute("class", "ship");
+    }
+    if (cboard[index].hit == true) {
+      cspot.setAttribute("class", "hit");
+    }
+    if (cboard[index].missedHit == true) {
+      cspot.setAttribute("class", "miss");
+    }
+  }
+
+  function updatePlayerBoard(selection) {
+    let index = selection;
+
+    let pboard = playerGameboard.getBoard();
+
+    let pspot = document.getElementById(`p${index}`);
+    if (pboard[index].ship == true) {
+      pspot.setAttribute("class", "ship p");
+    }
+    if (pboard[index].hit == true) {
+      pspot.setAttribute("class", "hit");
+    }
+    if (pboard[index].missedHit == true) {
+      pspot.setAttribute("class", "miss");
+    }
+  }
+
+  const rotateBtn = document.getElementById("rotate");
+  rotateBtn.addEventListener("click", () => rotateMyShips());
 }
 
 
@@ -57,120 +169,54 @@ function rotateMyShips(){
 
 
 
-function playGame(){
 
-    const computerPlayer = player('computer')
-    const humanPlayer = player('human')
-    const playerGameboard = gameboard('player')
-    const computerGameboard = gameboard('computer')
+/*
+function previewShip(length, direction) {
 
-    const computerDomBoard = document.getElementById('computer-board');
-    const playerDomBoard = document.getElementById('player-board');
+  let pspots = document.querySelectorAll(".p");
+  /*for (let i = 0; i < pspots.length; i++) {
+    pspots[i].removeEventListener("mouseover", displayPreview 
+    );
+  }
 
 
-
-    //two test ships
-    playerGameboard.placeShip(50, 4, 'x')
-    playerGameboard.placeShip(75, 2, 'y')
-    computerGameboard.placeShip(50, 4, 'x')
-    initializeBoard()
-        
-    let turn = "player"
-    function playerTurn(e, oppositionBoard){
-        oppositionBoard.receiveAttack(parseInt(e.target.id))
-        updateComputerBoard(e)
-        switchTurn()
-        computerTurn()
-    }
-
-    function switchTurn(){
-        if(turn == "player"){
-            return turn = "computer"
+  for (let i = 0; i < pspots.length; i++) {
+    let dp = function(){displayPreview.bind(i, direction,length)}
+    let rp = function(){removePreview.bind(i, direction, length)}
+    pspots[i].addEventListener("mouseover", dp 
+    );
+    pspots[i].addEventListener("mouseout", rp
+    );
+  }
+  function displayPreview(index, direction, length) {
+    if (direction == "x") {
+      pspots[index].classList.add('hover')
+      for(let j =0; j < length; j ++){
+          pspots[index+j].classList.add('hover')
+      }
+    }else{
+        pspots[index].classList.add('hover')
+        for(let j =0; j < length; j ++){
+            pspots[index-=10].classList.add('hover')
         }
     }
+  }
 
-    function computerTurn(){
-        let selection = computerPlayer.randomMove()
-
-        playerGameboard.receiveAttack(selection)
-        updatePlayerBoard(selection)
-    }
-
-
-
-
-    function initializeBoard(){
-        //Create computer board
-        let cboard = computerGameboard.getBoard()
-        for (let i=0 ; i < cboard.length; i++){
-            let spot = document.createElement('div');
-            spot.setAttribute('id', i)
-            spot.setAttribute('class', "spot computer-spot")
-    
-            spot.addEventListener("click",(e)=> playerTurn(e, computerGameboard));
-    
-            computerDomBoard.appendChild(spot)
+  function removePreview(index, direction, length) {
+    if (direction == "x") {
+      pspots[index].classList.remove('hover')
+      for(let j =0; j < length; j ++){
+          pspots[index+j].classList.remove('hover')
+      }
+    }else{
+        pspots[index].classList.remove('hover')
+        for(let j =0; j < length; j ++){
+            pspots[index-=10].classList.remove('hover')
         }
-        //create player board
-        let pboard = playerGameboard.getBoard()
-        for (let i=0 ; i < pboard.length; i++){
-            let spot = document.createElement('div');
-            spot.setAttribute('id', `p${i}`)
-            spot.setAttribute('class', "spot")
-            if(pboard[i].ship == true){spot.setAttribute('class', "ship ")}
-            if(pboard[i].hit == true){spot.setAttribute('class', "hit ")}
-            if(pboard[i].missedHit == true){spot.setAttribute('class', "miss ")}
-           
-            playerDomBoard.appendChild(spot)
-        }
-
     }
+  }
 
-
-
-
-
-    function updateComputerBoard(e){
-        let index = e.target.id
-    
-        let cboard = computerGameboard.getBoard()
-        let cspot = document.getElementById(index)
-        if(cboard[index].ship == true){cspot.setAttribute('class', "ship")}
-        if(cboard[index].hit == true){cspot.setAttribute('class', "hit")}
-        if(cboard[index].missedHit == true){cspot.setAttribute('class', "miss")}
-    
-    }
-    
-    function updatePlayerBoard(selection){
-        let index = selection
-
-        let pboard = playerGameboard.getBoard()
-        console.log(pboard[index])
-        let pspot = document.getElementById(`p${index}`)
-        if(pboard[index].ship == true){pspot.setAttribute('class', "ship")}
-        if(pboard[index].hit == true){pspot.setAttribute('class', "hit")}
-        if(pboard[index].missedHit == true){pspot.setAttribute('class', "miss")}
-    }
-
-
-
-    const rotateBtn = document.getElementById('rotate')
-    rotateBtn.addEventListener('click', () => rotateMyShips())
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 
