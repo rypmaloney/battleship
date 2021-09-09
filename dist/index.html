@@ -17,15 +17,19 @@
   <body>
     <h1>BATTLESHIP</h1>
     <div id="main">
-		<div class="place-ships-modal">
-			<div class="place-ships">
-				<div class="board-space">
-					<h2>Place</h2>
-					<div id="place-log"></div>
-					<div id="place-board" class="board"></div>
-				  </div>
-			</div>
-		</div>
+      <div class="place-ships-modal">
+        <div class="place-ships">
+            <div id="place-log"><h3>Place a Frigate</h3></div>
+            <div class="preview">
+              <div class="shipbox"></div>
+              <div class="shipbox"></div>
+              <div class="shipbox"></div>
+              <div class="shipbox"></div>
+              <div class="shipbox"></div>
+            </div>
+            <div id="place-board" class="board"></div>
+        </div>
+      </div>
       <div class="board-space">
         <h2>Computer</h2>
         <div id="computer-board" class="board"></div>
@@ -33,48 +37,44 @@
 
       <div class="pane">
         <div class="log">
-        	<h3>Game Log:</h3>
-		    <p id="log">Select one of your ships below.</p>
-		</div>
-		<div class="log">
-			<div class= "your">
-				<h3>Your Ships:</h3>
-				<button id="rotate">Rotate</button>
-			</div>	
-			<div id="rotatable" class="rotatable-row">
-				<div class= "display-vertical">
-					<div class="shipbox"></div>
-					<div class="shipbox"></div>
-				</div>
-				<div class= "display-vertical">
-					<div class="shipbox"></div>
-					<div class="shipbox"></div>
-				</div>
-				<div class= "display-vertical">
-					<div class="shipbox"> </div>
-					<div class="shipbox"></div>
-					<div class="shipbox"></div>
-				</div>
-				<div class= "display-vertical">
-					<div class="shipbox"></div>
-					<div class="shipbox"></div>
-					<div class="shipbox"></div>
-					<div class="shipbox"></div>
-				</div>
-				<div class= "display-vertical">
-					<div class="shipbox"></div>
-					<div class="shipbox"></div>
-					<div class="shipbox"></div>
-					<div class="shipbox"></div>
-					<div class="shipbox"></div>
-				</div>
-			
-			</div>
-		</div>
-
-
+          <h3>Game Log:</h3>
+          <p id="log">Select one of your ships below.</p>
+        </div>
+        <div class="log">
+          <div class="your">
+            <h3>Your Ships:</h3>
+            <button id="rotate">Rotate</button>
+          </div>
+          <div id="rotatable" class="rotatable-row">
+            <div class="display-vertical">
+              <div class="shipbox"></div>
+              <div class="shipbox"></div>
+            </div>
+            <div class="display-vertical">
+              <div class="shipbox"></div>
+              <div class="shipbox"></div>
+            </div>
+            <div class="display-vertical">
+              <div class="shipbox"></div>
+              <div class="shipbox"></div>
+              <div class="shipbox"></div>
+            </div>
+            <div class="display-vertical">
+              <div class="shipbox"></div>
+              <div class="shipbox"></div>
+              <div class="shipbox"></div>
+              <div class="shipbox"></div>
+            </div>
+            <div class="display-vertical">
+              <div class="shipbox"></div>
+              <div class="shipbox"></div>
+              <div class="shipbox"></div>
+              <div class="shipbox"></div>
+              <div class="shipbox"></div>
+            </div>
+          </div>
+        </div>
       </div>
-
 
       <div class="board-space">
         <h2>Player</h2>

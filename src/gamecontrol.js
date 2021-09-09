@@ -119,7 +119,7 @@ function playGame() {
       }
 
       playerDomBoard.appendChild(spot);
-      placeDomBoard.appendChild(spot);
+      placeDomBoard.appendChild(spot.cloneNode());
     }
 
 
