@@ -120,18 +120,49 @@ function playGame() {
       }
 
       playerDomBoard.appendChild(spot);
-      placeDomBoard.appendChild(spot.cloneNode());
+
     }
-
+	selectShipsWalkThrough()
 
 
   }
 
-  function selectShipsWalkthrough(){
-	
-	//make modal visible
-	modal.style.display ='block';
-	
+  function displayPlaceBoard(){
+	removeChildNodes(placeDomBoard)
+	let placeBoard = playerGameboard.getBoard();
+    for (let i = 0; i < placeBoard.length; i++) {
+      let spot = document.createElement("div");
+      spot.setAttribute("id", `p${i}`);
+      spot.setAttribute("class", "spot p place");
+      if (placeBoard[i].ship == true) {
+        spot.setAttribute("class", "ship p place");
+      }
+      if (placeBoard[i].hit == true) {
+        spot.setAttribute("class", "hit ");
+      }
+      if (placeBoard[i].missedHit == true) {
+        spot.setAttribute("class", "miss ");
+      }
+
+      placeDomBoard.appendChild(spot);
+    }
+  }
+
+
+
+  function selectShipsWalkThrough(){
+	displayPlaceBoard()
+	let placeSpots = document.querySelectorAll(".place")
+
+	for(let i=0; i<placeSpots.length; i++){
+		placeSpots[i].addEventListener("click", function(){
+			playerGameboard.placeShip(i, 2, "y"),
+			displayPlaceBoard()
+		})
+	}
+		  
+
+
   }
 
 
@@ -139,9 +170,11 @@ function playGame() {
 
 
 
-
-
-
+  function removeChildNodes(parent) {
+    while (parent.children[0]) {
+        parent.removeChild(parent.children[0]);
+    }
+}
   function updateComputerBoard(e) {
     let index = e.target.id;
 
@@ -157,7 +190,6 @@ function playGame() {
       cspot.setAttribute("class", "miss");
     }
   }
-
   function updatePlayerBoard(selection) {
     let index = selection;
 
