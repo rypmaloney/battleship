@@ -24,13 +24,16 @@ const gameboard = (player) => {
 
   //
   function placeShip(spot, length, direction) {
+    
+    
+    
     let id = `ship${spot}`;
     board[spot].ship = true;
     board[spot].id = id;
 
     meta.ships.push(ship(length,spot));
 
-    //only works for vertical ships
+    //for vertical ships
     if (direction === "y"){
       for (let i = 0; i < length - 1; i++) {
         spot -= 10;
