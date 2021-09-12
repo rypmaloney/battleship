@@ -122,7 +122,7 @@ function playGame() {
       playerDomBoard.appendChild(spot);
 
     }
-	selectShipsWalkThrough()
+	selectShipsWalkThrough("frigate", 5)
 
 
   }
@@ -150,22 +150,30 @@ function playGame() {
 
 
 
-  function selectShipsWalkThrough(){
+  function selectShipsWalkThrough(ship, length){
 	displayPlaceBoard()
+
 	let placeSpots = document.querySelectorAll(".place")
 
+	updatePlaceLog(ship)
+	//add event listener to add ship to player board, then display new board
 	for(let i=0; i<placeSpots.length; i++){
 		placeSpots[i].addEventListener("click", function(){
-			playerGameboard.placeShip(i, 2, "y"),
+			playerGameboard.placeShip(i, length, "y"),
 			displayPlaceBoard()
+			
 		})
+		
 	}
-		  
+	previewShip(length,ship)
 
 
   }
 
-
+function updatePlaceLog(ship){
+	let log = document.getElementById("place-log");
+	log.innerHTML= `<h3> Place a ${ship}</h3>`
+}
 
 
 
@@ -234,19 +242,15 @@ function closeModal(){
 
 
 
-/*
+
 function previewShip(length, direction) {
 
-  let pspots = document.querySelectorAll(".p");
-  /*for (let i = 0; i < pspots.length; i++) {
-    pspots[i].removeEventListener("mouseover", displayPreview 
-    );
-  }
+  let pspots = document.querySelectorAll(".place");
 
 
   for (let i = 0; i < pspots.length; i++) {
-    let dp = function(){displayPreview.bind(i, direction,length)}
-    let rp = function(){removePreview.bind(i, direction, length)}
+    let dp = function(){displayPreview(i, direction,length)}
+    let rp = function(){removePreview(i, direction, length)}
     pspots[i].addEventListener("mouseover", dp 
     );
     pspots[i].addEventListener("mouseout", rp
