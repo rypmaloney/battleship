@@ -18,7 +18,8 @@ To do:
     2. 
 */
 
-let shipDirection = "y";
+let shipDirection = "x";
+let currentPreviewLength= 5;
 
 function rotateMyShips() {
   if (shipDirection == "y") {
@@ -53,10 +54,24 @@ function playGame() {
   const playerDomBoard = document.getElementById("player-board");
   const placeDomBoard = document.getElementById("place-board")
 
+  const directionBtn = document.getElementById("switch-d");
+  directionBtn.addEventListener("click", function(){
+	switchd()
+	displayPlaceBoard()
+	previewShip(currentPreviewLength, shipDirection)
+
+  });
+
+
   const rotateBtn = document.getElementById("rotate");
   rotateBtn.addEventListener("click", () => rotateMyShips());
 
-  
+  function switchd(){
+	  if (shipDirection === "x"){
+		  return shipDirection = "y"
+		}else return shipDirection = "x"
+  }
+
   //two test ships
   playerGameboard.placeShip(50, 2, "x");
   playerGameboard.placeShip(75, 2, "y");
@@ -122,7 +137,7 @@ function playGame() {
       playerDomBoard.appendChild(spot);
 
     }
-	selectShipsWalkThrough("frigate", 5)
+	selectShipsWalkThrough()
 
 
   }
@@ -154,47 +169,65 @@ function playGame() {
 		displayPlaceBoard()
 
 		
-		placeFrigate()
-		function placeFrigate(){
+		placeCarrier()
+		function placeCarrier(){
 			let placeSpots = document.querySelectorAll(".place")
-			updatePlaceLog("frigate")
+			updatePlaceLog("carrier")
 			//add event listener to add ship to player board, then display new board
 			for(let i=0; i<placeSpots.length; i++){
 				placeSpots[i].addEventListener("click", function(){
-					playerGameboard.placeShip(i, 5, "y"),
+					playerGameboard.placeShip(i, 5, shipDirection),
 					displayPlaceBoard()
-					placeCruiser()
+					placeFrigate()
 				})
 				
 			}
-			previewShip(5,"frigate")
+			previewShip(5,shipDirection)
 			}
+
+		function placeFrigate(){
+				currentPreviewLength = 4
+				let placeSpots = document.querySelectorAll(".place")
+				updatePlaceLog("frigate")
+				//add event listener to add ship to player board, then display new board
+				for(let i=0; i<placeSpots.length; i++){
+					placeSpots[i].addEventListener("click", function(){
+						playerGameboard.placeShip(i, 4, shipDirection),
+						displayPlaceBoard()
+						placeCruiser()
+					})
+					
+				}
+				previewShip(4,shipDirection)
+				}
 			
 		function placeCruiser(){
+			currentPreviewLength = 3
 			let placeSpots = document.querySelectorAll(".place")
 			updatePlaceLog("cruiser")
 			//add event listener to add ship to player board, then display new board
 			for(let i=0; i<placeSpots.length; i++){
 				placeSpots[i].addEventListener("click", function(){
-					playerGameboard.placeShip(i, 3, "y"),
+					playerGameboard.placeShip(i, 3, shipDirection),
 					displayPlaceBoard()
 					placeSub()
 					})
 				}
-				previewShip(3,"cruiser")
+				previewShip(3,shipDirection)
 				}
 
 		function placeSub(){
+			currentPreviewLength = 3
 			let placeSpots = document.querySelectorAll(".place")
 			updatePlaceLog("Submarine")
 			//add event listener to add ship to player board, then display new board
 			for(let i=0; i<placeSpots.length; i++){
 				placeSpots[i].addEventListener("click", function(){
-					playerGameboard.placeShip(i, 3, "y"),
+					playerGameboard.placeShip(i, 3, shipDirection),
 					displayPlaceBoard()
 				})
 			}
-			previewShip(3,"Submarine")
+			previewShip(3,shipDirection)
 			}
 	}
 

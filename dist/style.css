@@ -200,5 +200,15 @@ h1 {
 
 }
 
+#switch-d{
+    width: 50px;
+    height: 50px;
+    margin: auto;
+    font-size: 10px;
+    padding: 0;
+    color: rgb(236, 236, 236) ;
+    background-color: rgb(148, 87, 23);
+    border-radius: 3px;
+}
 
 
