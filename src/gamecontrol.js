@@ -18,8 +18,7 @@ To do:
     2. 
 */
 
-let shipDirection = "x";
-let currentPreviewLength= 5;
+
 
 function rotateMyShips() {
   if (shipDirection == "y") {
@@ -45,6 +44,9 @@ function rotateMyShips() {
 }
 
 function playGame() {
+	let shipDirection = "x";
+	let currentPreviewLength= 5;
+
   const computerPlayer = player("computer");
   const humanPlayer = player("human");
   const playerGameboard = gameboard("player");
@@ -56,11 +58,21 @@ function playGame() {
 
   const directionBtn = document.getElementById("switch-d");
   directionBtn.addEventListener("click", function(){
+	//displayPlaceBoard()
 	switchd()
-	displayPlaceBoard()
-	previewShip(currentPreviewLength, shipDirection)
+
+	let placeSpots = document.querySelectorAll(".place")
+			//add event listener to add ship to player board, then display new board
+		for(let i=0; i<placeSpots.length; i++){
+			placeSpots[i].addEventListener("click", function(){
+				playerGameboard.placeShip(i, currentPreviewLength, shipDirection)
+				displayPlaceBoard()
+				placeSub()
+				})}
+		previewShip(currentPreviewLength, shipDirection)
 
   });
+
 
 
   const rotateBtn = document.getElementById("rotate");
@@ -176,7 +188,7 @@ function playGame() {
 			//add event listener to add ship to player board, then display new board
 			for(let i=0; i<placeSpots.length; i++){
 				placeSpots[i].addEventListener("click", function(){
-					playerGameboard.placeShip(i, 5, shipDirection),
+					playerGameboard.placeShip(i, 5, shipDirection)
 					displayPlaceBoard()
 					placeFrigate()
 				})
@@ -192,7 +204,7 @@ function playGame() {
 				//add event listener to add ship to player board, then display new board
 				for(let i=0; i<placeSpots.length; i++){
 					placeSpots[i].addEventListener("click", function(){
-						playerGameboard.placeShip(i, 4, shipDirection),
+						playerGameboard.placeShip(i, 4, shipDirection)
 						displayPlaceBoard()
 						placeCruiser()
 					})
@@ -208,7 +220,7 @@ function playGame() {
 			//add event listener to add ship to player board, then display new board
 			for(let i=0; i<placeSpots.length; i++){
 				placeSpots[i].addEventListener("click", function(){
-					playerGameboard.placeShip(i, 3, shipDirection),
+					playerGameboard.placeShip(i, 3, shipDirection)
 					displayPlaceBoard()
 					placeSub()
 					})
@@ -223,8 +235,9 @@ function playGame() {
 			//add event listener to add ship to player board, then display new board
 			for(let i=0; i<placeSpots.length; i++){
 				placeSpots[i].addEventListener("click", function(){
-					playerGameboard.placeShip(i, 3, shipDirection),
+					playerGameboard.placeShip(i, 3, shipDirection)
 					displayPlaceBoard()
+					closeModal()
 				})
 			}
 			previewShip(3,shipDirection)
@@ -299,8 +312,8 @@ function openModal(){
 
 
 function closeModal(){
-    let about = document.getElementById('aboutModal');
-        about.style.display = "none";
+    let modal = document.getElementById('place-ships-modal');
+        modal.style.display = "none";
 }
 
 
@@ -320,6 +333,7 @@ function previewShip(length, direction) {
     );
   }
   function displayPreview(index, direction, length) {
+	  
     if (direction == "x") {
       pspots[index].classList.add('hover')
       for(let j =0; j < length - 1; j ++){
