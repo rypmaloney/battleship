@@ -18,8 +18,6 @@ To do:
     2. 
 */
 
-
-
 function rotateMyShips() {
   if (shipDirection == "y") {
     let ships = document.querySelectorAll(".display-vertical");
@@ -44,8 +42,8 @@ function rotateMyShips() {
 }
 
 function playGame() {
-	let shipDirection = "x";
-	let currentPreviewLength= 5;
+  let shipDirection = "x";
+  let currentPreviewLength = 5;
 
   const computerPlayer = player("computer");
   const humanPlayer = player("human");
@@ -54,45 +52,20 @@ function playGame() {
 
   const computerDomBoard = document.getElementById("computer-board");
   const playerDomBoard = document.getElementById("player-board");
-  const placeDomBoard = document.getElementById("place-board")
-
-  const directionBtn = document.getElementById("switch-d");
-  directionBtn.addEventListener("click", function(){
-	//displayPlaceBoard()
-	switchd()
-
-	let placeSpots = document.querySelectorAll(".place")
-			//add event listener to add ship to player board, then display new board
-		for(let i=0; i<placeSpots.length; i++){
-			placeSpots[i].addEventListener("click", function(){
-				playerGameboard.placeShip(i, currentPreviewLength, shipDirection)
-				displayPlaceBoard()
-				placeSub()
-				})}
-		previewShip(currentPreviewLength, shipDirection)
-
-  });
-
-
+  const placeDomBoard = document.getElementById("place-board");
 
   const rotateBtn = document.getElementById("rotate");
   rotateBtn.addEventListener("click", () => rotateMyShips());
 
-  function switchd(){
-	  if (shipDirection === "x"){
-		  return shipDirection = "y"
-		}else return shipDirection = "x"
+  function switchd() {
+    if (shipDirection === "x") {
+      return (shipDirection = "y");
+    } else return (shipDirection = "x");
   }
 
   //two test ships
-  playerGameboard.placeShip(50, 2, "x");
-  playerGameboard.placeShip(75, 2, "y");
-  computerGameboard.placeShip(50, 4, "x");
+
   initializeBoard();
-
-
-
-
 
   function switchTurn() {
     if (turn == "player") {
@@ -108,30 +81,14 @@ function playGame() {
     computerTurn();
   }
 
-
   function computerTurn() {
     let selection = computerPlayer.randomMove();
     playerGameboard.receiveAttack(selection);
     updatePlayerBoard(selection);
   }
-
-
-
-
-  function initializeBoard() {
-    //Create computer board
-    let cboard = computerGameboard.getBoard();
-    for (let i = 0; i < cboard.length; i++) {
-      let spot = document.createElement("div");
-      spot.setAttribute("id", i);
-      spot.setAttribute("class", "spot computer-spot");
-
-      spot.addEventListener("click", (e) => playerTurn(e, computerGameboard));
-
-      computerDomBoard.appendChild(spot);
-    }
-    //create player board
-    let pboard = playerGameboard.getBoard();
+  function setPlayerBoard(){
+	removeChildNodes(playerDomBoard)
+	let pboard = playerGameboard.getBoard();
     for (let i = 0; i < pboard.length; i++) {
       let spot = document.createElement("div");
       spot.setAttribute("id", `p${i}`);
@@ -147,16 +104,28 @@ function playGame() {
       }
 
       playerDomBoard.appendChild(spot);
-
     }
-	selectShipsWalkThrough()
+}
+  function initializeBoard() {
+    //Create computer board
+    let cboard = computerGameboard.getBoard();
+    for (let i = 0; i < cboard.length; i++) {
+      let spot = document.createElement("div");
+      spot.setAttribute("id", i);
+      spot.setAttribute("class", "spot computer-spot");
 
+      spot.addEventListener("click", (e) => playerTurn(e, computerGameboard));
 
+      computerDomBoard.appendChild(spot);
+    }
+    //create player board
+    setPlayerBoard()
+    selectShipsWalkThrough();
   }
 
-  function displayPlaceBoard(){
-	removeChildNodes(placeDomBoard)
-	let placeBoard = playerGameboard.getBoard();
+  function displayPlaceBoard() {
+    removeChildNodes(placeDomBoard);
+    let placeBoard = playerGameboard.getBoard();
     for (let i = 0; i < placeBoard.length; i++) {
       let spot = document.createElement("div");
       spot.setAttribute("id", `p${i}`);
@@ -175,193 +144,208 @@ function playGame() {
     }
   }
 
+  function selectShipsWalkThrough() {
+    let currentPlaceShip = "carrier";
 
+    const directionBtn = document.getElementById("switch-d");
+    directionBtn.addEventListener("click", function () {
+      switchd();
+      displayPlaceBoard();
+      let placeSpots = document.querySelectorAll(".place");
+      //add event listener to add ship to player board, then display new board
+      for (let i = 0; i < placeSpots.length; i++) {
+        placeSpots[i].addEventListener("click", function () {
+          playerGameboard.placeShip(i, currentPreviewLength, shipDirection);
+          displayPlaceBoard();
+        });
+      }
+      switch (currentPlaceShip) {
+        case "carrier":
+          placeCarrier();
+          break;
+        case "frigate":
+          placeFrigate();
+          break;
+        case "cruiser":
+          placeCruiser();
+          break;
+        case "sub":
+          placeSub();
+      }
+      previewShip(currentPreviewLength, shipDirection);
+    });
 
-	function selectShipsWalkThrough(){
-		displayPlaceBoard()
+    displayPlaceBoard();
 
-		
-		placeCarrier()
-		function placeCarrier(){
-			let placeSpots = document.querySelectorAll(".place")
-			updatePlaceLog("carrier")
-			//add event listener to add ship to player board, then display new board
-			for(let i=0; i<placeSpots.length; i++){
-				placeSpots[i].addEventListener("click", function(){
-					playerGameboard.placeShip(i, 5, shipDirection)
-					displayPlaceBoard()
-					placeFrigate()
-				})
-				
-			}
-			previewShip(5,shipDirection)
-			}
+    placeCarrier();
+    function placeCarrier() {
+      let placeSpots = document.querySelectorAll(".place");
+      updatePlaceLog("carrier");
+      //add event listener to add ship to player board, then display new board
+      for (let i = 0; i < placeSpots.length; i++) {
+        placeSpots[i].addEventListener("click", function () {
+          playerGameboard.placeShip(i, 5, shipDirection);
+          displayPlaceBoard();
+          placeFrigate();
+          currentPlaceShip = "frigate";
+        });
+      }
+      previewShip(5, shipDirection);
+    }
 
-		function placeFrigate(){
-				currentPreviewLength = 4
-				let placeSpots = document.querySelectorAll(".place")
-				updatePlaceLog("frigate")
-				//add event listener to add ship to player board, then display new board
-				for(let i=0; i<placeSpots.length; i++){
-					placeSpots[i].addEventListener("click", function(){
-						playerGameboard.placeShip(i, 4, shipDirection)
-						displayPlaceBoard()
-						placeCruiser()
-					})
-					
-				}
-				previewShip(4,shipDirection)
-				}
-			
-		function placeCruiser(){
-			currentPreviewLength = 3
-			let placeSpots = document.querySelectorAll(".place")
-			updatePlaceLog("cruiser")
-			//add event listener to add ship to player board, then display new board
-			for(let i=0; i<placeSpots.length; i++){
-				placeSpots[i].addEventListener("click", function(){
-					playerGameboard.placeShip(i, 3, shipDirection)
-					displayPlaceBoard()
-					placeSub()
-					})
-				}
-				previewShip(3,shipDirection)
-				}
+    function placeFrigate() {
+      currentPreviewLength = 4;
+      let placeSpots = document.querySelectorAll(".place");
+      updatePlaceLog("frigate");
+      //add event listener to add ship to player board, then display new board
+      for (let i = 0; i < placeSpots.length; i++) {
+        placeSpots[i].addEventListener("click", function () {
+          playerGameboard.placeShip(i, 4, shipDirection);
+          displayPlaceBoard();
+          placeCruiser();
+          currentPlaceShip = "cruiser";
+        });
+      }
+      previewShip(4, shipDirection);
+    }
 
-		function placeSub(){
-			currentPreviewLength = 3
-			let placeSpots = document.querySelectorAll(".place")
-			updatePlaceLog("Submarine")
-			//add event listener to add ship to player board, then display new board
-			for(let i=0; i<placeSpots.length; i++){
-				placeSpots[i].addEventListener("click", function(){
-					playerGameboard.placeShip(i, 3, shipDirection)
-					displayPlaceBoard()
-					closeModal()
-				})
-			}
-			previewShip(3,shipDirection)
-			}
-	}
+    function placeCruiser() {
+      currentPreviewLength = 3;
+      let placeSpots = document.querySelectorAll(".place");
+      updatePlaceLog("cruiser");
+      //add event listener to add ship to player board, then display new board
+      for (let i = 0; i < placeSpots.length; i++) {
+        placeSpots[i].addEventListener("click", function () {
+          playerGameboard.placeShip(i, 3, shipDirection);
+          displayPlaceBoard();
+          placeSub();
+          currentPlaceShip = "sub";
+        });
+      }
+      previewShip(3, shipDirection);
+    }
 
+    function placeSub() {
+      currentPreviewLength = 3;
+      let placeSpots = document.querySelectorAll(".place");
+      updatePlaceLog("Submarine");
+      //add event listener to add ship to player board, then display new board
+      for (let i = 0; i < placeSpots.length; i++) {
+        placeSpots[i].addEventListener("click", function () {
+          playerGameboard.placeShip(i, 3, shipDirection);
+          displayPlaceBoard();
+		  setPlayerBoard()
+          closeModal();
+        });
+      }
+      previewShip(3, shipDirection);
+    }
+  }
 }
 
-function updatePlaceLog(ship){
-	let log = document.getElementById("place-log");
-	log.innerHTML= `<h3> Place a ${ship}</h3>`
+function updatePlaceLog(ship) {
+  let log = document.getElementById("place-log");
+  log.innerHTML = `<h3> Place a ${ship}</h3>`;
 }
-
-
-
 
 function removeChildNodes(parent) {
-    while (parent.children[0]) {
-        parent.removeChild(parent.children[0]);
-    }
+  while (parent.children[0]) {
+    parent.removeChild(parent.children[0]);
+  }
 }
 function updateComputerBoard(e) {
-    let index = e.target.id;
+  let index = e.target.id;
 
-    let cboard = computerGameboard.getBoard();
-    let cspot = document.getElementById(index);
-    if (cboard[index].ship == true) {
-      cspot.setAttribute("class", "ship");
-    }
-    if (cboard[index].hit == true) {
-      cspot.setAttribute("class", "hit");
-    }
-    if (cboard[index].missedHit == true) {
-      cspot.setAttribute("class", "miss");
-    }
+  let cboard = computerGameboard.getBoard();
+  let cspot = document.getElementById(index);
+  if (cboard[index].ship == true) {
+    cspot.setAttribute("class", "ship");
+  }
+  if (cboard[index].hit == true) {
+    cspot.setAttribute("class", "hit");
+  }
+  if (cboard[index].missedHit == true) {
+    cspot.setAttribute("class", "miss");
+  }
 }
 function updatePlayerBoard(selection) {
-    let index = selection;
+  let index = selection;
 
-    let pboard = playerGameboard.getBoard();
+  let pboard = playerGameboard.getBoard();
 
-    let pspot = document.getElementById(`p${index}`);
-    if (pboard[index].ship == true) {
-      pspot.setAttribute("class", "ship p");
-    }
-    if (pboard[index].hit == true) {
-      pspot.setAttribute("class", "hit");
-    }
-    if (pboard[index].missedHit == true) {
-      pspot.setAttribute("class", "miss");
-    }
+  let pspot = document.getElementById(`p${index}`);
+  if (pboard[index].ship == true) {
+    pspot.setAttribute("class", "ship p");
+  }
+  if (pboard[index].hit == true) {
+    pspot.setAttribute("class", "hit");
+  }
+  if (pboard[index].missedHit == true) {
+    pspot.setAttribute("class", "miss");
+  }
 }
-
-  
-
-
-
-
-
 
 ////////////////////////////////////////
-function openModal(){
+function openModal() {
+  modal.style.display = "block";
 
-    modal.style.display ='block';
-
-    window.onclick = function(event) {
-        if (event.target == about) {
-          modal.style.display = "none";
-        }
-      }
+  window.onclick = function (event) {
+    if (event.target == about) {
+      modal.style.display = "none";
+    }
+  };
 }
 
-
-function closeModal(){
-    let modal = document.getElementById('place-ships-modal');
-        modal.style.display = "none";
+function closeModal() {
+  let modal = document.getElementById("place-ships-modal");
+  modal.style.display = "none";
 }
-
-
-
 
 function previewShip(length, direction) {
-
   let pspots = document.querySelectorAll(".place");
 
-
   for (let i = 0; i < pspots.length; i++) {
-    let dp = function(){displayPreview(i, direction,length)}
-    let rp = function(){removePreview(i, direction, length)}
-    pspots[i].addEventListener("mouseover", dp 
-    );
-    pspots[i].addEventListener("mouseout", rp
-    );
+    let dp = function () {
+      displayPreview(i, direction, length);
+    };
+    let rp = function () {
+      removePreview(i, direction, length);
+    };
+    pspots[i].addEventListener("mouseover", dp);
+    pspots[i].addEventListener("mouseout", rp);
   }
   function displayPreview(index, direction, length) {
-	  
     if (direction == "x") {
-      pspots[index].classList.add('hover')
-      for(let j =0; j < length - 1; j ++){
-          pspots[index+j].classList.add('hover')
+      pspots[index].classList.add("hover");
+      for (let j = 0; j < length; j++) {
+        pspots[index + j].classList.add("hover");
       }
-    }else{
-        pspots[index].classList.add('hover')
-        for(let j =0; j < length -1; j ++){
-            pspots[index-=10].classList.add('hover')
-        }
+    } else {
+      pspots[index].classList.add("hover");
+      for (let j = 0; j < length - 1; j++) {
+        pspots[(index -= 10)].classList.add("hover");
+      }
     }
   }
 
   function removePreview(index, direction, length) {
     if (direction == "x") {
-      pspots[index].classList.remove('hover')
-      for(let j =0; j < length; j ++){
-          pspots[index+j].classList.remove('hover')
+      pspots[index].classList.remove("hover");
+      for (let j = 0; j < length; j++) {
+        pspots[index + j].classList.remove("hover");
       }
-    }else{
-        pspots[index].classList.remove('hover')
-        for(let j =0; j < length; j ++){
-            pspots[index-=10].classList.remove('hover')
-        }
+    } else {
+      pspots[index].classList.remove("hover");
+      for (let j = 0; j < length; j++) {
+        pspots[(index -= 10)].classList.remove("hover");
+      }
     }
   }
-
 }
+
+
+
+
 
 /*
 
