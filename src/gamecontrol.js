@@ -56,7 +56,7 @@ function playGame() {
 
   const rotateBtn = document.getElementById("rotate");
   rotateBtn.addEventListener("click", () => rotateMyShips());
-
+  initializeBoard()
   function switchd() {
     if (shipDirection === "x") {
       return (shipDirection = "y");
@@ -65,7 +65,6 @@ function playGame() {
 
   //two test ships
 
-  initializeBoard();
 
   function switchTurn() {
     if (turn == "player") {
@@ -86,13 +85,12 @@ function playGame() {
     playerGameboard.receiveAttack(selection);
     updatePlayerBoard(selection);
   }
-  function setPlayerBoard(){
-	removeChildNodes(playerDomBoard)
+  function setPlayerBoard() {
+
 	let pboard = playerGameboard.getBoard();
     for (let i = 0; i < pboard.length; i++) {
-      let spot = document.createElement("div");
-      spot.setAttribute("id", `p${i}`);
-      spot.setAttribute("class", "spot p");
+      let spot = document.getElementById(`p${i}`)
+
       if (pboard[i].ship == true) {
         spot.setAttribute("class", "ship p");
       }
@@ -100,12 +98,12 @@ function playGame() {
         spot.setAttribute("class", "hit ");
       }
       if (pboard[i].missedHit == true) {
-        spot.setAttribute("class", "miss ");
+        spot.setAttribute("class", "miss");
       }
 
-      playerDomBoard.appendChild(spot);
+
     }
-}
+  }
   function initializeBoard() {
     //Create computer board
     let cboard = computerGameboard.getBoard();
@@ -119,16 +117,34 @@ function playGame() {
       computerDomBoard.appendChild(spot);
     }
     //create player board
-    setPlayerBoard()
-    selectShipsWalkThrough();
+	let pboard = playerGameboard.getBoard();
+    for (let i = 0; i < pboard.length; i++) {
+      let spot = document.createElement("div");
+      spot.setAttribute("id", `p${i}`);
+      spot.setAttribute("class", "spot p");
+      if (pboard[i].ship == true) {
+        spot.setAttribute("class", "ship p");
+      }
+      if (pboard[i].hit == true) {
+        spot.setAttribute("class", "hit ");
+      }
+      if (pboard[i].missedHit == true) {
+        spot.setAttribute("class", "miss");
+      }
+
+      playerDomBoard.appendChild(spot);
+    }
+	selectShipsWalkThrough()
+
   }
+
 
   function displayPlaceBoard() {
     removeChildNodes(placeDomBoard);
     let placeBoard = playerGameboard.getBoard();
     for (let i = 0; i < placeBoard.length; i++) {
       let spot = document.createElement("div");
-      spot.setAttribute("id", `p${i}`);
+
       spot.setAttribute("class", "spot p place");
       if (placeBoard[i].ship == true) {
         spot.setAttribute("class", "ship p place");
@@ -234,156 +250,116 @@ function playGame() {
         placeSpots[i].addEventListener("click", function () {
           playerGameboard.placeShip(i, 3, shipDirection);
           displayPlaceBoard();
-		  setPlayerBoard()
+          setPlayerBoard()
           closeModal();
         });
       }
       previewShip(3, shipDirection);
     }
   }
-}
 
-function updatePlaceLog(ship) {
-  let log = document.getElementById("place-log");
-  log.innerHTML = `<h3> Place a ${ship}</h3>`;
-}
+  function updatePlaceLog(ship) {
+    let log = document.getElementById("place-log");
+    log.innerHTML = `<h3> Place a ${ship}</h3>`;
+  }
 
-function removeChildNodes(parent) {
-  while (parent.children[0]) {
-    parent.removeChild(parent.children[0]);
-  }
-}
-function updateComputerBoard(e) {
-  let index = e.target.id;
-
-  let cboard = computerGameboard.getBoard();
-  let cspot = document.getElementById(index);
-  if (cboard[index].ship == true) {
-    cspot.setAttribute("class", "ship");
-  }
-  if (cboard[index].hit == true) {
-    cspot.setAttribute("class", "hit");
-  }
-  if (cboard[index].missedHit == true) {
-    cspot.setAttribute("class", "miss");
-  }
-}
-function updatePlayerBoard(selection) {
-  let index = selection;
-
-  let pboard = playerGameboard.getBoard();
-
-  let pspot = document.getElementById(`p${index}`);
-  if (pboard[index].ship == true) {
-    pspot.setAttribute("class", "ship p");
-  }
-  if (pboard[index].hit == true) {
-    pspot.setAttribute("class", "hit");
-  }
-  if (pboard[index].missedHit == true) {
-    pspot.setAttribute("class", "miss");
-  }
-}
-
-////////////////////////////////////////
-function openModal() {
-  modal.style.display = "block";
-
-  window.onclick = function (event) {
-    if (event.target == about) {
-      modal.style.display = "none";
+  function removeChildNodes(parent) {
+    while (parent.children[0]) {
+      parent.removeChild(parent.children[0]);
     }
-  };
-}
+  }
+  function updateComputerBoard(e) {
+    let index = e.target.id;
 
-function closeModal() {
-  let modal = document.getElementById("place-ships-modal");
-  modal.style.display = "none";
-}
+    let cboard = computerGameboard.getBoard();
+    let cspot = document.getElementById(index);
+    if (cboard[index].ship == true) {
+      cspot.setAttribute("class", "ship");
+    }
+    if (cboard[index].hit == true) {
+      cspot.setAttribute("class", "hit");
+    }
+    if (cboard[index].missedHit == true) {
+      cspot.setAttribute("class", "miss");
+    }
+  }
+  function updatePlayerBoard(selection) {
 
-function previewShip(length, direction) {
-  let pspots = document.querySelectorAll(".place");
+    let index = selection;
 
-  for (let i = 0; i < pspots.length; i++) {
-    let dp = function () {
-      displayPreview(i, direction, length);
+    let pboard = playerGameboard.getBoard();
+
+
+    let pspot = document.getElementById(`p${index}`);
+    if (pboard[index].ship == true) {
+      pspot.setAttribute("class", "ship p");
+    }
+    if (pboard[index].hit == true) {
+      pspot.setAttribute("class", "hit");
+    }
+    if (pboard[index].missedHit == true) {
+      pspot.setAttribute("class", "miss");
+    }
+  }
+
+  ////////////////////////////////////////
+  function openModal() {
+    modal.style.display = "block";
+
+    window.onclick = function (event) {
+      if (event.target == about) {
+        modal.style.display = "none";
+      }
     };
-    let rp = function () {
-      removePreview(i, direction, length);
-    };
-    pspots[i].addEventListener("mouseover", dp);
-    pspots[i].addEventListener("mouseout", rp);
-  }
-  function displayPreview(index, direction, length) {
-    if (direction == "x") {
-      pspots[index].classList.add("hover");
-      for (let j = 0; j < length; j++) {
-        pspots[index + j].classList.add("hover");
-      }
-    } else {
-      pspots[index].classList.add("hover");
-      for (let j = 0; j < length - 1; j++) {
-        pspots[(index -= 10)].classList.add("hover");
-      }
-    }
   }
 
-  function removePreview(index, direction, length) {
-    if (direction == "x") {
-      pspots[index].classList.remove("hover");
-      for (let j = 0; j < length; j++) {
-        pspots[index + j].classList.remove("hover");
+  function closeModal() {
+    let modal = document.getElementById("place-ships-modal");
+    modal.style.display = "none";
+  }
+
+  function previewShip(length, direction) {
+    let pspots = document.querySelectorAll(".place");
+
+    for (let i = 0; i < pspots.length; i++) {
+      let dp = function () {
+        displayPreview(i, direction, length);
+      };
+      let rp = function () {
+        removePreview(i, direction, length);
+      };
+      pspots[i].addEventListener("mouseover", dp);
+      pspots[i].addEventListener("mouseout", rp);
+    }
+    function displayPreview(index, direction, length) {
+      if (direction == "x") {
+        pspots[index].classList.add("hover");
+        for (let j = 0; j < length; j++) {
+          pspots[index + j].classList.add("hover");
+        }
+      } else {
+        pspots[index].classList.add("hover");
+        for (let j = 0; j < length - 1; j++) {
+          pspots[(index -= 10)].classList.add("hover");
+        }
       }
-    } else {
-      pspots[index].classList.remove("hover");
-      for (let j = 0; j < length; j++) {
-        pspots[(index -= 10)].classList.remove("hover");
+    }
+
+    function removePreview(index, direction, length) {
+      if (direction == "x") {
+        pspots[index].classList.remove("hover");
+        for (let j = 0; j < length; j++) {
+          pspots[index + j].classList.remove("hover");
+        }
+      } else {
+        pspots[index].classList.remove("hover");
+        for (let j = 0; j < length; j++) {
+          pspots[(index -= 10)].classList.remove("hover");
+        }
       }
     }
   }
 }
 
 
-
-
-
-/*
-
-//two test ships
-playerGameboard.placeShip(50, 4, 'x')
-playerGameboard.placeShip(75, 2, 'y')
-computerGameboard.placeShip(50, 4, 'x')
-
-
-//testing hit and miss
-playerGameboard.receiveAttack(40)
-playerGameboard.receiveAttack(23)
-
-function initializeBoard(){
-    //Create computer board
-    let cboard = computerGameboard.getBoard()
-    for (let i=0 ; i < cboard.length; i++){
-        let spot = document.createElement('div');
-        spot.setAttribute('id', i)
-        spot.setAttribute('class', "spot computer-spot")
-
-        spot.addEventListener("click",(e)=> playerTurn(e, computerGameboard));
-
-        computerDomBoard.appendChild(spot)
-    }
-    //create player board
-    let pboard = playerGameboard.getBoard()
-    for (let i=0 ; i < pboard.length; i++){
-        let spot = document.createElement('div');
-        spot.setAttribute('id', i)
-        spot.setAttribute('class', "spot")
-        if(pboard[i].ship == true){spot.setAttribute('class', "ship ")}
-        if(pboard[i].hit == true){spot.setAttribute('class', "hit ")}
-        if(pboard[i].missedHit == true){spot.setAttribute('class', "miss ")}
-       
-        playerDomBoard.appendChild(spot)
-    }
-    console.log(pboard)
-}
-*/
 export default playGame;
