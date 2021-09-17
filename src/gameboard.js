@@ -7,6 +7,7 @@ const gameboard = (player) => {
     playerName: player,
     ships: [],
     missedHits: [],
+    hits: [],
   };
   //creation of the gameboard through looping; 10x10; use board[x][y] to reference a space
   let board = [];
@@ -18,6 +19,14 @@ const gameboard = (player) => {
         missedHit: false,
         });
     }
+
+
+  function checkForWinner(){
+
+    if(meta.hits.length === 15){
+      return true
+    }else {return false}
+  }
 
   //Board giveth
   const getBoard = () => board;
@@ -65,6 +74,7 @@ const gameboard = (player) => {
 
       //hit that boat at the location
       meta.ships[index].hit(spot);
+      meta.hits.push(spot)
     } else {
       meta.missedHits.push(spot);
       board[spot].missedHit = true;
@@ -76,6 +86,7 @@ const gameboard = (player) => {
     meta,
     placeShip,
     receiveAttack,
+    checkForWinner,
   };
 };
 

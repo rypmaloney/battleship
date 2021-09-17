@@ -5,26 +5,25 @@ const player = (name) => {
         moves: [],
     }
 
-    
-    
-    
-    function turn(spot){
-
-        
+  
+    let moveArray = []
+    for (i = 0; i < 99; i ++){
+        moveArray.push(i)
     }
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+    shuffleArray(moveArray)
+    let turnNumber = 0
 
     function randomMove(){
-        let x =  Math.floor(Math.random() * 100);
+        let currentTurn = turnNumber
+        turnNumber+=1
 
-        for (let i=0 ; i < meta.moves.length; i ++){
-           if(x === meta.moves[i]){
-                x =  Math.floor(Math.random() * 100);
-           }
-        }
-           
-
-        meta.moves.push(x)
-        return x
+        return moveArray[currentTurn]
     }
     /*
     const AI = () => {

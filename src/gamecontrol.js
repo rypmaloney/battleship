@@ -18,28 +18,6 @@ To do:
     2. 
 */
 
-function rotateMyShips() {
-  if (shipDirection == "y") {
-    let ships = document.querySelectorAll(".display-vertical");
-    console.log(ships);
-    let rotatable = document.getElementById("rotatable");
-    rotatable.setAttribute("class", "rotatable-column");
-    for (let i = 0; i < ships.length; i++) {
-      ships[i].setAttribute("class", "display-horizontal");
-    }
-
-    return (shipDirection = "x");
-  } else if (shipDirection == "x") {
-    let ships = document.querySelectorAll(".display-horizontal");
-    let rotatable = document.getElementById("rotatable");
-    rotatable.setAttribute("class", "rotatable-row");
-    for (let i = 0; i < ships.length; i++) {
-      ships[i].setAttribute("class", "ship-display display-vertical");
-    }
-
-    return (shipDirection = "y");
-  }
-}
 
 function playGame() {
   let shipDirection = "x";
@@ -54,8 +32,9 @@ function playGame() {
   const playerDomBoard = document.getElementById("player-board");
   const placeDomBoard = document.getElementById("place-board");
 
-  const rotateBtn = document.getElementById("rotate");
-  rotateBtn.addEventListener("click", () => rotateMyShips());
+
+
+
   initializeBoard()
   function switchd() {
     if (shipDirection === "x") {
@@ -77,6 +56,8 @@ function playGame() {
     oppositionBoard.receiveAttack(parseInt(e.target.id));
     updateComputerBoard(e);
     switchTurn();
+
+
     computerTurn();
   }
 
@@ -84,7 +65,10 @@ function playGame() {
     let selection = computerPlayer.randomMove();
     playerGameboard.receiveAttack(selection);
     updatePlayerBoard(selection);
+	if (playerGameboard.checkForWinner()){console.log('computerwon')}
+
   }
+
   function setPlayerBoard() {
 
 	let pboard = playerGameboard.getBoard();
@@ -175,6 +159,8 @@ function playGame() {
           displayPlaceBoard();
         });
       }
+
+
       switch (currentPlaceShip) {
         case "carrier":
           placeCarrier();
@@ -359,6 +345,9 @@ function playGame() {
       }
     }
   }
+
+
+
 }
 
 
