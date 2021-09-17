@@ -23,7 +23,7 @@ const gameboard = (player) => {
 
   function checkForWinner(){
 
-    if(meta.hits.length === 15){
+    if(meta.hits.length === 17){
       return true
     }else {return false}
   }

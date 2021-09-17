@@ -7,7 +7,7 @@ const player = (name) => {
 
   
     let moveArray = []
-    for (i = 0; i < 99; i ++){
+    for (let i = 0; i < 100; i ++){
         moveArray.push(i)
     }
     function shuffleArray(array) {

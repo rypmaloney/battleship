@@ -2,20 +2,12 @@ import player from "./player";
 import gameboard from "./gameboard";
 import ship from "./ship";
 
-/* Steps:
-    1. Initialize gameboard x
-    2. Computer picks random ships
-    3. Player places their ships:
-        1.
-    4. Turns begin. Each turn consits of:
-        1. choosing spot runnign computerBoard.receive(spot)
-        2. Switch turn
-
-
+/* 
 To do: 
-    1. Make ability to place ships horizontally
-    2. create random placement for computer
-    2. 
+    1. Make dispay for win conditions
+    2. fix place ship bugs
+    3. clean up code
+	4. make ai smarter 
 */
 
 
@@ -173,6 +165,9 @@ function playGame() {
           break;
         case "sub":
           placeSub();
+		  break;
+		case "patrol":
+			placePatrol();
       }
       previewShip(currentPreviewLength, shipDirection);
     });
@@ -190,6 +185,7 @@ function playGame() {
           displayPlaceBoard();
           placeFrigate();
           currentPlaceShip = "frigate";
+		  setPlayerBoard()
         });
       }
       previewShip(5, shipDirection);
@@ -206,6 +202,7 @@ function playGame() {
           displayPlaceBoard();
           placeCruiser();
           currentPlaceShip = "cruiser";
+		  setPlayerBoard()
         });
       }
       previewShip(4, shipDirection);
@@ -222,6 +219,7 @@ function playGame() {
           displayPlaceBoard();
           placeSub();
           currentPlaceShip = "sub";
+		  setPlayerBoard()
         });
       }
       previewShip(3, shipDirection);
@@ -236,12 +234,28 @@ function playGame() {
         placeSpots[i].addEventListener("click", function () {
           playerGameboard.placeShip(i, 3, shipDirection);
           displayPlaceBoard();
+		  placePatrol()
+		  currentPlaceShip = "patrol"
           setPlayerBoard()
-          closeModal();
         });
       }
       previewShip(3, shipDirection);
     }
+	function placePatrol() {
+		currentPreviewLength = 3;
+		let placeSpots = document.querySelectorAll(".place");
+		updatePlaceLog("Patrol Boat");
+		//add event listener to add ship to player board, then display new board
+		for (let i = 0; i < placeSpots.length; i++) {
+		  placeSpots[i].addEventListener("click", function () {
+			playerGameboard.placeShip(i, 2, shipDirection);
+			displayPlaceBoard();
+			setPlayerBoard()
+			closeModal();
+		  });
+		}
+		previewShip(2, shipDirection);
+	  }
   }
 
   function updatePlaceLog(ship) {
