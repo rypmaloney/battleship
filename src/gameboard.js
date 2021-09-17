@@ -34,27 +34,44 @@ const gameboard = (player) => {
     //
     function placeShip(spot, length, direction) {
         let id = `ship${spot}`;
-        board[spot].ship = true;
-        board[spot].id = id;
 
-        meta.ships.push(ship(length, spot));
-
-        //for vertical ships
         if (direction === "y") {
-            for (let i = 0; i < length - 1; i++) {
-                spot -= 10;
+            if (spot - length * 10 < 0) {
+                console.log("You cannot place a ship off the board");
+            } else {
                 board[spot].ship = true;
                 board[spot].id = id;
+                meta.ships.push(ship(length, spot));
+                for (let i = 0; i < length - 1; i++) {
+                    spot -= 10;
+                    board[spot].ship = true;
+                    board[spot].id = id;
+                }
             }
         }
-        //Horizontal ships
-        if (direction === "x") {
-            for (let i = 0; i < length - 1; i++) {
-                spot += 1;
+        if (direction === "x"){
+            let goForX = true
+            for (let i = 0; i < length - 1; i++){
+                 spot += 1
+                 if (spot % 10 === 0){
+                    goForX = false;
+                 }
+            }
+            if (goForX === true){
                 board[spot].ship = true;
                 board[spot].id = id;
+                meta.ships.push(ship(length, spot));
+                for (let i = 0; i < length - 1; i++) {
+                    spot += 1;
+                    board[spot].ship = true;
+                    board[spot].id = id;
+                }
+            }else {
+                console.log("you can't do that!")
             }
+        
         }
+
     }
 
     function receiveAttack(spot) {

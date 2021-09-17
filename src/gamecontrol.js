@@ -6,7 +6,7 @@ import ship from "./ship";
 To do: 
     1. Make random ship placement for computer
 	2. Make dispay for win conditions
-    3. fix place ship bugs
+    
     4. clean up code
 	5. make ai smarter
 	6. move game win conditions to somewhere else?  
