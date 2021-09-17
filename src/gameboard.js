@@ -32,34 +32,49 @@ const gameboard = (player) => {
     const getBoard = () => board;
 
     //
-    function checkPlacement(spot,length,direction){
+    function checkPlacement(spot, length, direction) {
         if (direction === "y") {
-            if ((spot - ((length - 1) * 10)) < 0) {
-                console.log("You cannot place a ship off the board");
-                return false;
+            let goForY = true;
+
+            if (spot - (length - 1) * 10 < 0) {
+                goForY = false;
             } else {
-                return true;
+                goForY = true;
             }
-        }
-        if (direction === "x"){
-            let goForX = true
-            for (let i = 0; i < length - 1; i++){
-                 spot += 1
-                 if (spot % 10 === 0){
-                    goForX = false;
-                 }
+            for (let i = 0; i < length; i++) {
+                if (board[spot].ship === true) {
+                    console.log("Gotchya!");
+                    goForY = false;
+                }
+                    spot -= 10;
             }
-            if (goForX === true){
+
+            if (goForY === true) {
                 return true;
-            }else {
-                console.log("you can't do that!")
+            } else {
+                console.log("you can't do that!");
                 return false;
             }
-        
         }
 
+        if (direction === "x") {
+            let goForX = true;
+            for (let i = 0; i < length; i++) {
+                
+                if (spot % 10 === 0 || board[spot].ship === true) {
+                    goForX = false;
+                }
+                spot += 1;
+            }
+            if (goForX === true) {
+                return true;
+            } else {
+                console.log("you can't do that!");
+                return false;
+            }
+        }
     }
-    
+
     function placeShip(spot, length, direction) {
         let id = `ship${spot}`;
         board[spot].ship = true;
@@ -84,7 +99,6 @@ const gameboard = (player) => {
             }
         }
     }
-
 
     function receiveAttack(spot) {
         if (board[spot].id != null) {
