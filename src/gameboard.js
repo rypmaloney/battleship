@@ -32,21 +32,13 @@ const gameboard = (player) => {
     const getBoard = () => board;
 
     //
-    function placeShip(spot, length, direction) {
-        let id = `ship${spot}`;
-
+    function checkPlacement(spot,length,direction){
         if (direction === "y") {
-            if (spot - length * 10 < 0) {
+            if ((spot - ((length - 1) * 10)) < 0) {
                 console.log("You cannot place a ship off the board");
+                return false;
             } else {
-                board[spot].ship = true;
-                board[spot].id = id;
-                meta.ships.push(ship(length, spot));
-                for (let i = 0; i < length - 1; i++) {
-                    spot -= 10;
-                    board[spot].ship = true;
-                    board[spot].id = id;
-                }
+                return true;
             }
         }
         if (direction === "x"){
@@ -58,21 +50,41 @@ const gameboard = (player) => {
                  }
             }
             if (goForX === true){
-                board[spot].ship = true;
-                board[spot].id = id;
-                meta.ships.push(ship(length, spot));
-                for (let i = 0; i < length - 1; i++) {
-                    spot += 1;
-                    board[spot].ship = true;
-                    board[spot].id = id;
-                }
+                return true;
             }else {
                 console.log("you can't do that!")
+                return false;
             }
         
         }
 
     }
+    
+    function placeShip(spot, length, direction) {
+        let id = `ship${spot}`;
+        board[spot].ship = true;
+        board[spot].id = id;
+
+        meta.ships.push(ship(length, spot));
+
+        //for vertical ships
+        if (direction === "y") {
+            for (let i = 0; i < length - 1; i++) {
+                spot -= 10;
+                board[spot].ship = true;
+                board[spot].id = id;
+            }
+        }
+        //Horizontal ships
+        if (direction === "x") {
+            for (let i = 0; i < length - 1; i++) {
+                spot += 1;
+                board[spot].ship = true;
+                board[spot].id = id;
+            }
+        }
+    }
+
 
     function receiveAttack(spot) {
         if (board[spot].id != null) {
@@ -99,6 +111,7 @@ const gameboard = (player) => {
         placeShip,
         receiveAttack,
         checkForWinner,
+        checkPlacement,
     };
 };
 

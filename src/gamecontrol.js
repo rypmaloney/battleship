@@ -6,7 +6,7 @@ import ship from "./ship";
 To do: 
     1. Make random ship placement for computer
 	2. Make dispay for win conditions
-    
+    3. move logic for ship placement ok into own function
     4. clean up code
 	5. make ai smarter
 	6. move game win conditions to somewhere else?  
@@ -155,18 +155,7 @@ function playGame() {
         directionBtn.addEventListener("click", function () {
             switchd();
             displayPlaceBoard();
-            let placeSpots = document.querySelectorAll(".place");
-            //add event listener to add ship to player board, then display new board
-            for (let i = 0; i < placeSpots.length; i++) {
-                placeSpots[i].addEventListener("click", function () {
-                    playerGameboard.placeShip(
-                        i,
-                        currentPreviewLength,
-                        shipDirection
-                    );
-                    displayPlaceBoard();
-                });
-            }
+
             switch (currentPlaceShip) {
                 case "carrier":
                     placeCarrier();
@@ -195,11 +184,15 @@ function playGame() {
             //add event listener to add ship to player board, then display new board
             for (let i = 0; i < placeSpots.length; i++) {
                 placeSpots[i].addEventListener("click", function () {
-                    playerGameboard.placeShip(i, 5, shipDirection);
-                    displayPlaceBoard();
-                    placeFrigate();
-                    currentPlaceShip = "frigate";
-                    setPlayerBoard();
+                    if (playerGameboard.checkPlacement(i, 5, shipDirection)) {
+                        playerGameboard.placeShip(i, 5, shipDirection);
+                        displayPlaceBoard();
+                        placeFrigate();
+                        currentPlaceShip = "frigate";
+                        setPlayerBoard();
+                    } else {
+                        placeCarrier();
+                    }
                 });
             }
             previewShip(5, shipDirection);
@@ -212,11 +205,15 @@ function playGame() {
             //add event listener to add ship to player board, then display new board
             for (let i = 0; i < placeSpots.length; i++) {
                 placeSpots[i].addEventListener("click", function () {
-                    playerGameboard.placeShip(i, 4, shipDirection);
-                    displayPlaceBoard();
-                    placeCruiser();
-                    currentPlaceShip = "cruiser";
-                    setPlayerBoard();
+                    if (playerGameboard.checkPlacement(i, 4, shipDirection)) {
+                        playerGameboard.placeShip(i, 4, shipDirection);
+                        displayPlaceBoard();
+                        placeCruiser();
+                        currentPlaceShip = "cruiser";
+                        setPlayerBoard();
+                    } else {
+                        placeFrigate();
+                    }
                 });
             }
             previewShip(4, shipDirection);
@@ -229,11 +226,15 @@ function playGame() {
             //add event listener to add ship to player board, then display new board
             for (let i = 0; i < placeSpots.length; i++) {
                 placeSpots[i].addEventListener("click", function () {
-                    playerGameboard.placeShip(i, 3, shipDirection);
-                    displayPlaceBoard();
-                    placeSub();
-                    currentPlaceShip = "sub";
-                    setPlayerBoard();
+                    if (playerGameboard.checkPlacement(i, 3, shipDirection)) {
+                        playerGameboard.placeShip(i, 3, shipDirection);
+                        displayPlaceBoard();
+                        placeSub();
+                        currentPlaceShip = "sub";
+                        setPlayerBoard();
+                    } else {
+                        placeCruiser();
+                    }
                 });
             }
             previewShip(3, shipDirection);
@@ -246,11 +247,15 @@ function playGame() {
             //add event listener to add ship to player board, then display new board
             for (let i = 0; i < placeSpots.length; i++) {
                 placeSpots[i].addEventListener("click", function () {
-                    playerGameboard.placeShip(i, 3, shipDirection);
-                    displayPlaceBoard();
-                    placePatrol();
-                    currentPlaceShip = "patrol";
-                    setPlayerBoard();
+                    if (playerGameboard.checkPlacement(i, 3, shipDirection)) {
+                        playerGameboard.placeShip(i, 3, shipDirection);
+                        displayPlaceBoard();
+                        placePatrol();
+                        currentPlaceShip = "patrol";
+                        setPlayerBoard();
+                    } else {
+                        placeSub();
+                    }
                 });
             }
             previewShip(3, shipDirection);
@@ -262,10 +267,14 @@ function playGame() {
             //add event listener to add ship to player board, then display new board
             for (let i = 0; i < placeSpots.length; i++) {
                 placeSpots[i].addEventListener("click", function () {
-                    playerGameboard.placeShip(i, 2, shipDirection);
-                    displayPlaceBoard();
-                    setPlayerBoard();
-                    closeModal();
+                    if (playerGameboard.checkPlacement(i, 2, shipDirection)) {
+                        playerGameboard.placeShip(i, 2, shipDirection);
+                        displayPlaceBoard();
+                        setPlayerBoard();
+                        closeModal();
+                    } else {
+                        placePatrol();
+                    }
                 });
             }
             previewShip(2, shipDirection);
@@ -314,7 +323,6 @@ function playGame() {
         }
     }
 
-
     function closeModal() {
         let modal = document.getElementById("place-ships-modal");
         modal.style.display = "none";
@@ -342,9 +350,9 @@ function playGame() {
             } else {
                 pspots[index].classList.add("hover");
                 for (let j = 0; j < length - 1; j++) {
-					if (index - 10>= 0){
-                    	pspots[(index -= 10)].classList.add("hover");
-					}
+                    if (index - 10 >= 0) {
+                        pspots[(index -= 10)].classList.add("hover");
+                    }
                 }
             }
         }
@@ -353,16 +361,16 @@ function playGame() {
             if (direction == "x") {
                 pspots[index].classList.remove("hover");
                 for (let j = 0; j < length; j++) {
-					if(pspots[index + j].classList.contains("hover")){
-                    	pspots[index + j].classList.remove("hover");
-					}
+                    if (pspots[index + j].classList.contains("hover")) {
+                        pspots[index + j].classList.remove("hover");
+                    }
                 }
             } else {
                 pspots[index].classList.remove("hover");
                 for (let j = 0; j < length; j++) {
-					if(index -10 >= 0){
-                    	pspots[(index -= 10)].classList.remove("hover");
-					}
+                    if (index - 10 >= 0) {
+                        pspots[(index -= 10)].classList.remove("hover");
+                    }
                 }
             }
         }
