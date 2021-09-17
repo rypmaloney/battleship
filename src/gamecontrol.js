@@ -4,10 +4,11 @@ import ship from "./ship";
 
 /* 
 To do: 
-    1. Make dispay for win conditions
-    2. fix place ship bugs
-    3. clean up code
-	4. make ai smarter 
+    1. Make random ship placement for computer
+	2. Make dispay for win conditions
+    3. fix place ship bugs
+    4. clean up code
+	5. make ai smarter 
 */
 
 
@@ -20,6 +21,7 @@ function playGame() {
   const playerGameboard = gameboard("player");
   const computerGameboard = gameboard("computer");
 
+  const log = document.getElementById("log");
   const computerDomBoard = document.getElementById("computer-board");
   const playerDomBoard = document.getElementById("player-board");
   const placeDomBoard = document.getElementById("place-board");
@@ -48,9 +50,13 @@ function playGame() {
     oppositionBoard.receiveAttack(parseInt(e.target.id));
     updateComputerBoard(e);
     switchTurn();
+	if (computerGameboard.meta.success === true){
+		log.innerText = "You hit the computer's ship!"
+	}else{
+		log.innerText = "You missed."
+	}
 
-
-    computerTurn();
+    setTimeout(() => computerTurn(), 500);
   }
 
   function computerTurn() {
@@ -58,6 +64,11 @@ function playGame() {
     playerGameboard.receiveAttack(selection);
     updatePlayerBoard(selection);
 	if (playerGameboard.checkForWinner()){console.log('computerwon')}
+	if (playerGameboard.meta.success === true){
+		log.innerText = "The Computer hit your ship!"
+	}else{
+		log.innerText = "The Computer missed."
+	}
 
   }
 
@@ -242,7 +253,7 @@ function playGame() {
       previewShip(3, shipDirection);
     }
 	function placePatrol() {
-		currentPreviewLength = 3;
+		currentPreviewLength = 2;
 		let placeSpots = document.querySelectorAll(".place");
 		updatePlaceLog("Patrol Boat");
 		//add event listener to add ship to player board, then display new board
