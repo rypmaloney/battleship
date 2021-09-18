@@ -1,3 +1,6 @@
+import computerGameboard from "./gamecontrol"
+import gameboard from "./gameboard"
+
 
 const player = (name) => {
     let meta = {
@@ -25,6 +28,8 @@ const player = (name) => {
 
         return moveArray[currentTurn]
     }
+
+    
     /*
     const AI = () => {
         function randomMove(){
@@ -36,6 +41,7 @@ const player = (name) => {
     return {
         meta,
         randomMove,
+
     }
 }
 

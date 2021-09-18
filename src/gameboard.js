@@ -100,6 +100,8 @@ const gameboard = (player) => {
         }
     }
 
+
+
     function receiveAttack(spot) {
         if (board[spot].id != null) {
             //update the board

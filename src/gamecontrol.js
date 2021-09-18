@@ -12,6 +12,11 @@ To do:
 	6. move game win conditions to somewhere else?  
 */
 
+const computerPlayer = player("computer");
+const humanPlayer = player("human");
+const playerGameboard = gameboard("player");
+const computerGameboard = gameboard("computer");
+
 function playGame() {
     //Initial state for placement preview and game start
     let shipDirection = "x";
@@ -19,10 +24,6 @@ function playGame() {
     let turn = "player";
 
     // DOM
-    const computerPlayer = player("computer");
-    const humanPlayer = player("human");
-    const playerGameboard = gameboard("player");
-    const computerGameboard = gameboard("computer");
 
     const log = document.getElementById("log");
     const computerDomBoard = document.getElementById("computer-board");
@@ -30,6 +31,28 @@ function playGame() {
     const placeDomBoard = document.getElementById("place-board");
 
     initializeBoard();
+
+    placeRandomShips(5);
+    placeRandomShips(4);
+    placeRandomShips(3);
+    placeRandomShips(3);
+    placeRandomShips(2);
+
+    function placeRandomShips(length) {
+        let spot = Math.floor(Math.random() * 100);
+
+        let randomD = Math.floor(Math.random() * 1);
+        let direction = "x";
+        if (randomD === 1) {
+            direction = "y";
+        }
+
+        if (computerGameboard.checkPlacement(spot, length, direction)) {
+            computerGameboard.placeShip(spot, length, direction);
+        } else {
+            placeRandomShips(length);
+        }
+    }
     //Switching the direction of ships for previews
     function switchd() {
         if (shipDirection === "x") {
@@ -47,7 +70,9 @@ function playGame() {
         oppositionBoard.receiveAttack(parseInt(e.target.id));
         updateComputerBoard(e);
         switchTurn();
-        if (computerGameboard.meta.success === true) {
+		if (computerGameboard.checkForWinner()) {
+            log.innerText = "You WON!"
+        }else if (computerGameboard.meta.success === true) {
             log.innerText = "You hit the computer's ship!";
         } else {
             log.innerText = "You missed.";
@@ -61,9 +86,8 @@ function playGame() {
         playerGameboard.receiveAttack(selection);
         updatePlayerBoard(selection);
         if (playerGameboard.checkForWinner()) {
-            console.log("computerwon");
-        }
-        if (playerGameboard.meta.success === true) {
+            log.innerText = "The computer kicked your ass! You lost to a machine!"
+        } else if (playerGameboard.meta.success === true) {
             log.innerText = "The Computer hit your ship!";
         } else {
             log.innerText = "The Computer missed.";
@@ -377,4 +401,4 @@ function playGame() {
     }
 }
 
-export default playGame;
+export { playGame, computerGameboard };
