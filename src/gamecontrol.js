@@ -4,7 +4,7 @@ import ship from "./ship";
 
 /* 
 To do: 
-    1. Make random ship placement for computer
+
 	2. Make dispay for win conditions
     3. move logic for ship placement ok into own function
     4. clean up code
@@ -29,6 +29,13 @@ function playGame() {
     const computerDomBoard = document.getElementById("computer-board");
     const playerDomBoard = document.getElementById("player-board");
     const placeDomBoard = document.getElementById("place-board");
+	const winner = document.getElementById("winner")
+	const gameEndModal = document.getElementById("game-end")
+	const reset = document.getElementById('reset')
+
+	reset.addEventListener("click", ()=> window.location.reload())
+
+
 
     initializeBoard();
 
@@ -81,7 +88,8 @@ function playGame() {
         updateComputerBoard(e);
         switchTurn();
 		if (computerGameboard.checkForWinner()) {
-            log.innerText = "You WON!"
+			gameEndModal.style.display = "block"
+            winner.innerText = "You WON!"
         }else if (computerGameboard.meta.success === true) {
             log.innerText = "You hit the computer's ship!";
         } else {
@@ -96,7 +104,8 @@ function playGame() {
         playerGameboard.receiveAttack(selection);
         updatePlayerBoard(selection);
         if (playerGameboard.checkForWinner()) {
-            log.innerText = "The computer kicked your ass! You lost to a machine!"
+			gameEndModal.style.display = "block"
+            winner.innerText = "You lost to a machine."
         } else if (playerGameboard.meta.success === true) {
             log.innerText = "The Computer hit your ship!";
         } else {
@@ -358,8 +367,8 @@ function playGame() {
     }
 
     function closeModal() {
-        let modal = document.getElementById("place-ships-modal");
-        modal.style.display = "none";
+        let placeModal = document.getElementById("place-modal");
+        placeModal.style.display = "none";
     }
 
     function previewShip(length, direction) {

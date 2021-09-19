@@ -139,7 +139,15 @@ h1 {
     flex-direction: column;
 }
 
-#place-ships-modal {
+#game-end{
+    z-index: 2 !important;
+    display: none;
+}
+
+
+
+
+.modal {
     display: block; 
     position: fixed; 
     z-index: 1; 
@@ -152,7 +160,7 @@ h1 {
     background-color: rgba(0,0,0,0.4); 
 }
 
-.place-ships {
+.inner-modal {
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -175,7 +183,8 @@ h1 {
 
 }
 
-#switch-d{
+
+button{
     width: 50px;
     height: 50px;
     margin: auto;

@@ -17,8 +17,14 @@
   <body>
     <h1>BATTLESHIP</h1>
     <div id="main">
-      <div id="place-ships-modal">
-        <div class="place-ships">
+	<div id="game-end" class= "modal">
+		<div class="inner-modal">
+			<h2 id="winner">You won!</h2>
+			<button id="reset">Play again</button>
+		</div>
+	</div>
+      <div id="place-modal" class= "modal">
+        <div class="inner-modal">
             <div id="place-log"><h3>Place a Frigate</h3></div>
 			<button id="switch-d">Switch Direction</button>
 			
