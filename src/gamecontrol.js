@@ -1,8 +1,6 @@
 import player from "./player";
 import gameboard from "./gameboard";
 
-
-
 const computerPlayer = player("computer");
 const playerGameboard = gameboard("player");
 const computerGameboard = gameboard("computer");
@@ -12,54 +10,58 @@ function playGame() {
     let shipDirection = "x";
     let currentPreviewLength = 5;
     let turn = "player";
-	let placeShipIndex = 0
-	let placementArray =  computerPlayer.makeRandomArray(100)
+    let placeShipIndex = 0;
+    let placementArray = computerPlayer.makeRandomArray(100);
 
     // DOM
     const log = document.getElementById("log");
     const computerDomBoard = document.getElementById("computer-board");
     const playerDomBoard = document.getElementById("player-board");
     const placeDomBoard = document.getElementById("place-board");
-	const winner = document.getElementById("winner")
-	const gameEndModal = document.getElementById("game-end")
-	const reset = document.getElementById('reset')
-	const directionBtn = document.getElementById("switch-d");
+    const winner = document.getElementById("winner");
+    const gameEndModal = document.getElementById("game-end");
+    const reset = document.getElementById("reset");
+    const directionBtn = document.getElementById("switch-d");
 
-	//reset button for end game
-	reset.addEventListener("click", ()=> window.location.reload())
+    //reset button for end game
+    reset.addEventListener("click", () => window.location.reload());
 
-
-	//sets initial boards up
+    //sets initial boards up
     initializeBoard();
 
-
-	//places computer ships
-	placeRandomShips(5)
+    //places computer ships
+    placeRandomShips(5);
     placeRandomShips(4);
     placeRandomShips(3);
     placeRandomShips(3);
     placeRandomShips(2);
-	
 
     function placeRandomShips(length) {
-		let placed = false
-		while (placed === false){
-			let randomD = Math.floor(Math.random() * 2);
-			let direction = "x";
-			if (randomD === 1) {
-				direction = "y";
-			}
-			
-			if (computerGameboard.checkPlacement(placementArray[placeShipIndex], length, direction)) {
-				computerGameboard.placeShip(placementArray[placeShipIndex], length, direction);
-				placed = true
-			} else {
-				placeShipIndex +=1
-				
-			}
+        let placed = false;
+        while (placed === false) {
+            let randomD = Math.floor(Math.random() * 2);
+            let direction = "x";
+            if (randomD === 1) {
+                direction = "y";
+            }
 
-		}
-
+            if (
+                computerGameboard.checkPlacement(
+                    placementArray[placeShipIndex],
+                    length,
+                    direction
+                )
+            ) {
+                computerGameboard.placeShip(
+                    placementArray[placeShipIndex],
+                    length,
+                    direction
+                );
+                placed = true;
+            } else {
+                placeShipIndex += 1;
+            }
+        }
     }
 
     //Switching the direction of ships for previews
@@ -79,10 +81,10 @@ function playGame() {
         oppositionBoard.receiveAttack(parseInt(e.target.id));
         updateComputerBoard(e);
         switchTurn();
-		if (computerGameboard.checkForWinner()) {
-			gameEndModal.style.display = "block"
-            winner.innerText = "You WON!"
-        }else if (computerGameboard.meta.success === true) {
+        if (computerGameboard.checkForWinner()) {
+            gameEndModal.style.display = "block";
+            winner.innerText = "You WON!";
+        } else if (computerGameboard.meta.success === true) {
             log.innerText = "You hit the computer's ship!";
         } else {
             log.innerText = "You missed.";
@@ -96,8 +98,8 @@ function playGame() {
         playerGameboard.receiveAttack(selection);
         updatePlayerBoard(selection);
         if (playerGameboard.checkForWinner()) {
-			gameEndModal.style.display = "block"
-            winner.innerText = "You lost to a machine."
+            gameEndModal.style.display = "block";
+            winner.innerText = "You lost to a machine.";
         } else if (playerGameboard.meta.success === true) {
             log.innerText = "The Computer hit your ship!";
         } else {
@@ -186,12 +188,11 @@ function playGame() {
     //separate function for each ship type
     function selectShipsWalkThrough() {
         let currentPlaceShip = "carrier";
-        
-        directionBtn.addEventListener("click", () => switchDirectionReturn())
-            
 
-		function switchDirectionReturn(){
-			switchd();
+        directionBtn.addEventListener("click", () => switchDirectionReturn());
+
+        function switchDirectionReturn() {
+            switchd();
             displayPlaceBoard();
 
             switch (currentPlaceShip) {
@@ -211,10 +212,9 @@ function playGame() {
                     placePatrol();
             }
             previewShip(currentPreviewLength, shipDirection);
-        
-		}
+        }
 
-		//begin the selection walkthrough with carrier
+        //begin the selection walkthrough with carrier
         displayPlaceBoard();
         placeCarrier();
 
