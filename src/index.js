@@ -1,8 +1,6 @@
 console.log('If you see me...')
 
-
-import { playGame, computerGameboard} from "./gamecontrol";
-
+import { playGame} from "./gamecontrol";
 
 playGame()
 

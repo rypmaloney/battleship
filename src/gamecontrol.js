@@ -4,7 +4,6 @@ import gameboard from "./gameboard";
 
 
 const computerPlayer = player("computer");
-const humanPlayer = player("human");
 const playerGameboard = gameboard("player");
 const computerGameboard = gameboard("computer");
 

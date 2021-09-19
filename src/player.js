@@ -1,5 +1,3 @@
-import computerGameboard from "./gamecontrol";
-import gameboard from "./gameboard";
 
 const player = (name) => {
     let meta = {

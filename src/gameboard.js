@@ -31,7 +31,7 @@ const gameboard = (player) => {
     //Board giveth
     const getBoard = () => board;
 
-    //
+
     function checkPlacement(spot, length, direction) {
         if (direction === "y") {
             let goForY = true;
