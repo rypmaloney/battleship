@@ -32,27 +32,37 @@ function playGame() {
 
     initializeBoard();
 
-    placeRandomShips(5);
+	let placeShipIndex = 0
+	let placementArray =  computerPlayer.makeRandomArray(100)
+
+	placeRandomShips(5)
     placeRandomShips(4);
     placeRandomShips(3);
     placeRandomShips(3);
     placeRandomShips(2);
+	
 
     function placeRandomShips(length) {
-        let spot = Math.floor(Math.random() * 100);
+		let placed = false
+		while (placed === false){
+			let randomD = Math.floor(Math.random() * 2);
+			let direction = "x";
+			if (randomD === 1) {
+				direction = "y";
+			}
+			
+			if (computerGameboard.checkPlacement(placementArray[placeShipIndex], length, direction)) {
+				computerGameboard.placeShip(placementArray[placeShipIndex], length, direction);
+				placed = true
+			} else {
+				placeShipIndex +=1
+				
+			}
 
-        let randomD = Math.floor(Math.random() * 1);
-        let direction = "x";
-        if (randomD === 1) {
-            direction = "y";
-        }
+		}
 
-        if (computerGameboard.checkPlacement(spot, length, direction)) {
-            computerGameboard.placeShip(spot, length, direction);
-        } else {
-            placeRandomShips(length);
-        }
     }
+
     //Switching the direction of ships for previews
     function switchd() {
         if (shipDirection === "x") {

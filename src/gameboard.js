@@ -42,11 +42,13 @@ const gameboard = (player) => {
                 goForY = true;
             }
             for (let i = 0; i < length; i++) {
-                if (board[spot].ship === true) {
-                    console.log("Gotchya!");
-                    goForY = false;
+                if (spot > 0) {
+                    if (board[spot].ship === true) {
+                        console.log("Gotchya!");
+                        goForY = false;
+                    }
                 }
-                    spot -= 10;
+                spot -= 10;
             }
 
             if (goForY === true) {
@@ -55,17 +57,21 @@ const gameboard = (player) => {
                 console.log("you can't do that!");
                 return false;
             }
-        }
-
-        if (direction === "x") {
+        } else {
             let goForX = true;
             for (let i = 0; i < length; i++) {
-                
-                if (spot % 10 === 0 || board[spot].ship === true) {
-                    goForX = false;
+                if (spot < 100) {
+                    if (board[spot].ship === true) {
+                        goForX = false;
+                    }
                 }
                 spot += 1;
+                if (spot % 10 === 0 || spot > 100) {
+                    goForX = false;
+                }
+                
             }
+
             if (goForX === true) {
                 return true;
             } else {
@@ -99,8 +105,6 @@ const gameboard = (player) => {
             }
         }
     }
-
-
 
     function receiveAttack(spot) {
         if (board[spot].id != null) {
