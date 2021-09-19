@@ -1,16 +1,7 @@
 import player from "./player";
 import gameboard from "./gameboard";
-import ship from "./ship";
 
-/* 
-To do: 
 
-	2. Make dispay for win conditions
-    3. move logic for ship placement ok into own function
-    4. clean up code
-	5. make ai smarter
-	6. move game win conditions to somewhere else?  
-*/
 
 const computerPlayer = player("computer");
 const humanPlayer = player("human");
@@ -22,9 +13,10 @@ function playGame() {
     let shipDirection = "x";
     let currentPreviewLength = 5;
     let turn = "player";
+	let placeShipIndex = 0
+	let placementArray =  computerPlayer.makeRandomArray(100)
 
     // DOM
-
     const log = document.getElementById("log");
     const computerDomBoard = document.getElementById("computer-board");
     const playerDomBoard = document.getElementById("player-board");
@@ -32,16 +24,17 @@ function playGame() {
 	const winner = document.getElementById("winner")
 	const gameEndModal = document.getElementById("game-end")
 	const reset = document.getElementById('reset')
+	const directionBtn = document.getElementById("switch-d");
 
+	//reset button for end game
 	reset.addEventListener("click", ()=> window.location.reload())
 
 
-
+	//sets initial boards up
     initializeBoard();
 
-	let placeShipIndex = 0
-	let placementArray =  computerPlayer.makeRandomArray(100)
 
+	//places computer ships
 	placeRandomShips(5)
     placeRandomShips(4);
     placeRandomShips(3);
@@ -194,9 +187,12 @@ function playGame() {
     //separate function for each ship type
     function selectShipsWalkThrough() {
         let currentPlaceShip = "carrier";
-        const directionBtn = document.getElementById("switch-d");
-        directionBtn.addEventListener("click", function () {
-            switchd();
+        
+        directionBtn.addEventListener("click", () => switchDirectionReturn())
+            
+
+		function switchDirectionReturn(){
+			switchd();
             displayPlaceBoard();
 
             switch (currentPlaceShip) {
@@ -216,11 +212,13 @@ function playGame() {
                     placePatrol();
             }
             previewShip(currentPreviewLength, shipDirection);
-        });
+        
+		}
 
+		//begin the selection walkthrough with carrier
         displayPlaceBoard();
-
         placeCarrier();
+
         function placeCarrier() {
             let placeSpots = document.querySelectorAll(".place");
             updatePlaceLog("carrier");
