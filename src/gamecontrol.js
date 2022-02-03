@@ -119,6 +119,7 @@ function playGame() {
             }
             if (pboard[i].hit == true) {
                 spot.setAttribute("class", "hit ");
+                spot.setAttribute("disabled", true)
             }
             if (pboard[i].missedHit == true) {
                 spot.setAttribute("class", "miss");

@@ -44,7 +44,7 @@ const gameboard = (player) => {
             for (let i = 0; i < length; i++) {
                 if (spot > 0) {
                     if (board[spot].ship === true) {
-                        console.log("Gotchya!");
+
                         goForY = false;
                     }
                 }
@@ -54,7 +54,7 @@ const gameboard = (player) => {
             if (goForY === true) {
                 return true;
             } else {
-                console.log("you can't do that!");
+
                 return false;
             }
         } else {
@@ -75,7 +75,7 @@ const gameboard = (player) => {
             if (goForX === true) {
                 return true;
             } else {
-                console.log("you can't do that!");
+
                 return false;
             }
         }
